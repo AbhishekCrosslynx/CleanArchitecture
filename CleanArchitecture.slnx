@@ -25,13 +25,9 @@
     <Project Path="src/UI/Test/Test.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests/Application.Tests.L0/Application.Tests.L0.csproj" />
     <Project Path="tests/ArchitectureTests/ArchitectureTests.csproj" />
-    <Project Path="tests/Application.Tests.L0/Application.Tests.L0.csproj">
-      <Build Solution="Debug|*" Project="false" />
-    </Project>
-    <Project Path="tests/WebApi.Tests.L1/WebApi.Tests.L1.csproj">
-      <Build Solution="Debug|*" Project="false" />
-    </Project>
+    <Project Path="tests/WebApi.Tests.L1/WebApi.Tests.L1.csproj" />
   </Folder>
   <Project Path="docker-compose.dcproj">
     <Build />
