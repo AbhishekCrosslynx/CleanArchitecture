@@ -1,0 +1,217 @@
+﻿@* Reusable Tax Calculator Component with MudBlazor *@
+@page "/tax-calculator"
+@layout DocsLayout
+
+@using System.Globalization
+@using NumericWordsConversion
+
+<MudContainer MaxWidth="MaxWidth.Small" Class="d-flex align-items-center" >
+    <MudGrid Justify="Justify.Center">
+        <MudItem xs="12" sm="8">
+            <MudCard>
+                <MudCardContent>
+
+                    <MudText Typo="Typo.h4" Align="Align.Center" Class="mb-6">
+                        Tax Calculator
+                    </MudText>
+
+                    <!-- Quantity: int, with spin buttons hidden and min 0 -->
+                    <MudNumericField T="int" 
+                                     @bind-Value="Quantity"
+                                     Placeholder="0"
+                                     Label="Quantity"
+                                     Variant="Variant.Outlined"
+                                     Immediate="true"
+                                     HideSpinButtons="true"
+                                     Min="0" />
+
+                    <!-- Rate: decimal, with 2 decimal places, min 0.0 -->
+                    <MudNumericField T="decimal" 
+                                     @bind-Value="Rate"
+                                     Placeholder="0.00"
+                                     Label="Rate"
+                                     Variant="Variant.Outlined"
+                                     HideSpinButtons="true"
+                                     Immediate="true"
+                                     Min="0.0m" />
+
+                    <MudSelect @bind-Value="SelectedGstRate"
+                               Label="GST Rate (%)"
+                               Variant="Variant.Outlined">
+                        @foreach (var gst in gstRates)
+                        {
+                            <MudSelectItem Value="@gst">@gst %</MudSelectItem>
+                        }
+                    </MudSelect>
+
+                    <MudTextField Label="Taxable Amount"
+                                  Value="@(gross.ToString("C", currencyCulture))"
+                                  ReadOnly="true"
+                                  Variant="Variant.Outlined"
+                                  Class="mt-4" />
+
+                    <MudTextField Label=@($"CGST @ {SelectedGstRate / 2.0m} %")
+                                  Value="@(cgst.ToString("C", currencyCulture))"
+                                  ReadOnly="true"
+                                  Variant="Variant.Outlined" />
+
+                    <MudTextField Label=@($"SGST @ {SelectedGstRate / 2.0m} %")
+                                  Value="@(sgst.ToString("C", currencyCulture))"
+                                  ReadOnly="true"
+                                  Variant="Variant.Outlined" />
+
+                    <MudTextField Label="Round Off"
+                                  Value="@roundOff.ToString("C", currencyCulture)"
+                                  ReadOnly="true"
+                                  Variant="Variant.Outlined"
+                                  Style="@($"color:{RoundOffColor};")" />
+
+                    @* <MudTextField Label="Gross Amount"
+                                  Value="@(grand.ToString("C", currencyCulture))"
+                                  ReadOnly="true"
+                                  Variant="Variant.Outlined" /> *@
+
+                    <MudTextField Label="Gross Amount"
+                                  Value="@(roundedGrand.ToString("C", currencyCulture))"
+                                  ReadOnly="true"
+                                  Variant="Variant.Outlined" />
+
+                    <MudTextField Label="Amount in Words"
+                                  Value="@amountInWords"
+                                  ReadOnly="true"
+                                  Variant="Variant.Outlined"
+                                  Lines="3"
+                                  Class="mt-4" />
+
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</MudContainer>
+
+@code {
+    // Private fields
+    private int _quantity = 0;
+    private decimal _rate = 0.00m;
+    private int _selectedGstRate = 5;
+
+    // Public properties with setters that trigger re-calculation
+    public int Quantity
+    {
+        get => _quantity;
+        set
+        {
+            if (_quantity != value)
+            {
+                _quantity = Math.Max(0, value);
+                CalculateAll();
+            }
+        }
+    }
+
+    public decimal Rate
+    {
+        get => _rate;
+        set
+        {
+            if (_rate != value)
+            {
+                _rate = Math.Max(0, value);
+                CalculateAll();
+            }
+        }
+    }
+
+    public int SelectedGstRate
+    {
+        get => _selectedGstRate;
+        set
+        {
+            if (_selectedGstRate != value)
+            {
+                _selectedGstRate = value;
+                CalculateAll();
+            }
+        }
+    }
+
+    // Calculated values
+    private decimal gross;
+    private decimal cgst;
+    private decimal sgst;
+    private decimal grand;
+    private decimal roundOff;
+    private decimal roundedGrand;
+    private string amountInWords = "";
+
+    private string RoundOffColor
+    {
+        get
+        {
+            if (roundOff > 0) return "green";
+            if (roundOff < 0) return "red";
+            return "inherit";
+        }
+    }
+
+    private readonly List<int> gstRates = new() { 0, 5, 18, 28 };
+    private readonly CultureInfo currencyCulture = CultureInfo.CreateSpecificCulture("hi-IN");
+
+    // NumericWordsConversion converter (configured for Indian numbering)
+    private readonly CurrencyWordsConverter _converter;
+
+    public TaxCalculator()
+    {
+        var options = new CurrencyWordsConversionOptions
+        {
+            Culture = Culture.Hindi,               // Lakh, Crore system
+            OutputFormat = OutputFormat.English,   // Words in English
+            CurrencyUnit = "Rupee",
+            SubCurrencyUnit = "Paisa",
+        };
+        _converter = new CurrencyWordsConverter(options);
+    }
+
+    protected override void OnInitialized()
+    {
+        CalculateAll();
+    }
+
+    private void CalculateAll()
+    {
+        // Ensure non-negative values
+        _quantity = Math.Max(0, _quantity);
+        _rate = Math.Max(0, _rate);
+
+        // Gross
+        gross = _quantity * _rate;
+
+        // GST
+        decimal gstAmount = gross * (_selectedGstRate / 100m);
+        cgst = gstAmount / 2;
+        sgst = cgst;
+
+        // Grand total
+        grand = gross + cgst + sgst;
+
+        roundedGrand = Math.Round(grand, 0, MidpointRounding.AwayFromZero);
+
+        roundOff = roundedGrand - grand;
+        // Amount in words
+        if (grand == 0)
+        {
+            amountInWords = "Zero Rupee Only.";
+        }
+        else
+        {
+            var rawWords = _converter.ToWords(roundedGrand);
+            var textInfo = CultureInfo.CurrentCulture.TextInfo;
+            amountInWords = textInfo.ToTitleCase(rawWords.ToLower()) + " Only.";
+        }
+
+        // Notify UI of changes
+        StateHasChanged();
+    }
+
+   
+}

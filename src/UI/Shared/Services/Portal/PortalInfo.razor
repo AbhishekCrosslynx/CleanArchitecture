@@ -1,0 +1,60 @@
+﻿@* 
+    PortalInfo.razor
+    ----------------
+    Shared component to display the current portal information (title, description).
+    Supports optional custom title/description via parameters.
+    Designed for use in any portal: Client, Operations, Test, or future ones.
+*@
+
+@page "/portal-info"
+@inject IPortalContext Portal
+
+<div class="portal-info">
+    @* Display custom title if provided, otherwise use portal-aware default *@
+    <h3>@(CustomTitle ?? Title)</h3>
+
+    @* Display custom description if provided, otherwise use portal-aware default *@
+    <p>@(CustomDescription ?? Description)</p>
+</div>
+
+@code {
+    /// <summary>
+    /// Optional custom title for the portal info.
+    /// If set, overrides the portal-aware default title.
+    /// Example: <PortalInfo CustomTitle="Dashboard" />
+    /// </summary>
+    [Parameter]
+    public string? CustomTitle { get; set; }
+
+    /// <summary>
+    /// Optional custom description for the portal info.
+    /// If set, overrides the portal-aware default description.
+    /// Example: <PortalInfo CustomDescription="Welcome to your dashboard" />
+    /// </summary>
+    [Parameter]
+    public string? CustomDescription { get; set; }
+
+    /// <summary>
+    /// Portal-aware default title based on IPortalContext.
+    /// This is automatically determined by the current portal type.
+    /// </summary>
+    private string Title => Portal.Current switch
+    {
+        PortalType.Client => "Client Portal",
+        PortalType.Operations => "Operations Portal",
+        PortalType.Test => "Test Portal",
+        _ => "Unknown Portal"
+    };
+
+    /// <summary>
+    /// Portal-aware default description based on IPortalContext.
+    /// Provides context-specific guidance or messaging.
+    /// </summary>
+    private string Description => Portal.Current switch
+    {
+        PortalType.Client => "Welcome! Manage your personal data and track your activity.",
+        PortalType.Operations => "Operations dashboard for managing system workflows.",
+        PortalType.Test => "Testing environment for validating features.",
+        _ => "Portal context not set."
+    };
+}

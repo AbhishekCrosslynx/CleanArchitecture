@@ -1,0 +1,380 @@
+﻿@using MudBlazor.Utilities
+
+<style>
+    .docs-mudblazor-logo {
+        width: 40px;
+    }
+
+    .docs-brand-text {
+        letter-spacing: .2rem;
+        font-weight: 400;
+        font-family: 'Roboto';
+        margin-inline-start: 12px;
+        font-size: 24px;
+        user-select: none;
+    }
+    
+    .docs-search-bar {
+        & .mud-input {
+            height: 42px;
+        }
+
+        &.mud-input-control {
+            background-color: var(--mud-palette-gray-light);
+            margin-bottom: 5px;
+            height: 42px;
+            border-radius: var(--mud-default-borderradius);
+        }
+
+        & .mud-input.mud-input-outlined .mud-input-outlined-border {
+            border: none;
+            border-radius: var(--mud-default-borderradius);
+        }
+    }
+
+    .docs-gray-bg {
+        background-color: var(--mud-palette-background-gray);
+    }
+
+    .docs-mobile-dialog-search {
+        height: 400px;
+    }
+
+    .docs-mobile-dialog-search-popover {
+        box-shadow: none !important;
+        margin-top: 8px;
+        background-color: var(--mud-palette-background-gray);
+
+        .mud-list {
+            background-color: var(--mud-palette-background-gray);
+
+            .mud-list-item {
+                background-color: var(--mud-palette-surface);
+                margin: 6px 0;
+                border-radius: 4px;
+
+                .mud-typography-body2 {
+                    font-size: 12px;
+                    font-weight: 500;
+                    color: var(--mud-palette-text-secondary);
+                }
+                @@media(hover: hover)
+
+                and (pointer: fine) {
+                    &:hover {
+                        color: var(--mud-palette-primary-text);
+                        background-color: var(--mud-palette-primary);
+
+                        .mud-typography-body2 {
+                            color: var(--mud-palette-primary-text);
+                        }
+                    }
+                }
+
+                &:active {
+                    color: var(--mud-palette-primary-text);
+                    background-color: var(--mud-palette-primary);
+
+                    .mud-typography-body2 {
+                        color: var(--mud-palette-primary-text);
+                    }
+                }
+            }
+        }
+    }
+</style>
+<MudHotkey Key="JsKey.KeyK" KeyModifiers="CtrlLeftKeyModifiers" OnHotkeyPressed="HandleSearchHotkeyAsync" />
+<MudHotkey Key="JsKey.KeyK" KeyModifiers="CtrlRightKeyModifiers" OnHotkeyPressed="HandleSearchHotkeyAsync" />
+
+<!-- ========================= MOBILE APPBAR ========================= -->
+<div class="d-flex align-center flex-grow-1 d-md-none">
+     <!-- Hamburger menu button (only visible on mobile) -->
+    <MudTooltip Text="Open Menu">
+    <MudIconButton OnClick="DrawerToggleCallback" Icon="@Icons.Material.Rounded.Notes" Color="Color.Inherit" Edge="Edge.Start" aria-label="Toggle drawer" />
+    </MudTooltip>
+    <MudSpacer />
+    <!-- Brand logo + text -->
+    <NavLink ActiveClass="d-flex align-center" href="/">
+        <MudBlazorLogo Class="docs-mudblazor-logo" />
+        <MudText Color="Color.Primary" Typo="Typo.h5" Class="docs-brand-text">TestName</MudText>
+    </NavLink>
+    <MudSpacer />
+    <!-- Search icon button (opens search dialog on mobile) -->
+    <MudTooltip Text="Search (Ctrl+K)">
+        <MudIconButton Icon="@Icons.Material.Rounded.Search" Color="Color.Inherit" Edge="Edge.End" OnClick="@(() => OpenSearchDialog())" aria-label="Open search dialog" aria-keyshortcuts="Control+K" />
+    </MudTooltip>
+
+</div>
+
+<!-- ========================= DESKTOP APPBAR ========================= -->
+<div class="d-none d-md-flex align-center flex-grow-1">
+
+    <!-- Remove later - Hamburger menu button (only visible on mobile) -->
+    <MudTooltip Text="Open Menu">
+        <MudIconButton OnClick="DrawerToggleCallback" Icon="@Icons.Material.Rounded.Notes" Color="Color.Inherit" Edge="Edge.Start" aria-label="Toggle drawer" />
+    </MudTooltip>
+
+    <!-- Brand logo + Brand name -->
+    <NavLink ActiveClass="d-flex align-center me-4" href="/">
+        <MudBlazorLogo Class="docs-mudblazor-logo" />
+        <MudText Color="Color.Primary" Typo="Typo.h5" Class="docs-brand-text">TestName</MudText>
+    </NavLink>
+
+    <!-- Navigation buttons (desktop only) -->
+    @* <MudButton Href="/getting-started/installation" Color="Color.Inherit" Variant="Variant.Text" Class="@GetActiveClass(DocsBasePage.GettingStarted)">Get Started</MudButton> *@
+
+    @* <MudButton Href="/docs/overview" Color="Color.Inherit" Variant="Variant.Text" Class="@GetActiveClass(DocsBasePage.Docs)">Docs</MudButton>
+    <MudButton Href="/mud/project/team" Color="Color.Inherit" Variant="Variant.Text" Class="@GetActiveClass(DocsBasePage.DiscoverMore)">Learn More</MudButton> *@
+
+    <MudButton Href="@AppRoutes.Counter" Color="Color.Inherit" Variant="Variant.Text" Class="@GetActiveClass(AppRoutes.Counter)">Counter</MudButton>
+
+    <MudButton Href="@AppRoutes.Weather" Color="Color.Inherit" Variant="Variant.Text" Class="@GetActiveClass(AppRoutes.Weather)">Weather</MudButton>
+
+    <MudButton Href="@AppRoutes.PageWithLandingLayout" Color="Color.Inherit" Variant="Variant.Text" Class="@GetActiveClass(AppRoutes.PageWithLandingLayout)">With Layout</MudButton>
+
+    <MudButton Href="@AppRoutes.PageWithoutLandingLayout" Color="Color.Inherit" Variant="Variant.Text" Class="@GetActiveClass(AppRoutes.PageWithoutLandingLayout)">Without Layout</MudButton>
+
+    @if (Portal.Current == PortalType.Client)
+    {
+        <!-- Dropdown menu for "Projects" -->
+        <MudMenu Color="Color.Inherit" Variant="Variant.Text" Class="mx-1 px-3" PopoverClass="docs-layout-menu-shadow" ListClass="d-flex px-4 pb-2 docs-appbar-special-menu" LockScroll="true" Label="Projects" @bind-Open="isMenuOpen" EndIcon="@((isMenuOpen) ? Icons.Material.Filled.KeyboardArrowUp : Icons.Material.Filled.KeyboardArrowDown)" ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter">
+            <MudList T="string">
+                <MudListItem Href="/mud/introduction">
+                    <div class="d-flex">
+                        <MudText Color="Color.Primary">MudBlazor</MudText>
+                    </div>
+                    <MudText Typo="Typo.body2">What is MudBlazor?</MudText>
+                </MudListItem>
+                <MudListItem Href="https://try.mudblazor.com/">
+                    <div class="d-flex">
+                        <MudText Color="Color.Primary">Try</MudText><MudText>MudBlazor</MudText>
+                    </div>
+                    <MudText Typo="Typo.body2">Online code editor with Blazor</MudText>
+                </MudListItem>
+                <MudListItem Href="https://github.com/MudBlazor/ThemeManager">
+                    <div class="d-flex">
+                        <MudText>Theme</MudText><MudText Color="Color.Secondary">Manager</MudText>
+                    </div>
+                    <MudText Typo="Typo.body2">Manage your theme live in your app</MudText>
+                </MudListItem>
+                <MudListItem Href="https://github.com/MudBlazor/Templates">
+                    <div class="d-flex">
+                        <MudText>Templates</MudText>
+                    </div>
+                    <MudText Typo="Typo.body2">Blazor templates with MudBlazor</MudText>
+                </MudListItem>
+            </MudList>
+            <MudList T="string" Class="relative">
+                <MudListItem Href="https://github.com/MudBlazor/MudBlazor.Icons">
+                    <div class="d-flex">
+                        <MudText>Icon Pack</MudText>
+                    </div>
+                    <MudText Typo="Typo.body2">Extra Material icons and symbols</MudText>
+                </MudListItem>
+                <MudListItem Href="https://github.com/MudBlazor/Translations">
+                    <div class="d-flex">
+                        <MudText>Translations</MudText>
+                    </div>
+                    <MudText Typo="Typo.body2">Support for additional locales</MudText>
+                </MudListItem>
+                <MudListItem Href="/mud/community/extensions">
+                    <div class="d-flex">
+                        <MudText Color="Color.Warning">Extensions</MudText>
+                    </div>                
+                    <MudText Typo="Typo.body2">Community Extensions</MudText>
+                </MudListItem>
+            </MudList>
+        </MudMenu>
+    }
+    <MudSpacer />
+
+    <!-- Search bar logic (desktop only) -->
+    @if (DisplaySearchBar)
+    {
+        <!-- Inline autocomplete search bar -->
+        <MudAutocomplete @ref="_searchBarAutocomplete" T="ApiLinkServiceEntry" Class="docs-search-bar mx-4"
+                         AutoFocus="false" Placeholder="Search (Ctrl+K)" Variant="Variant.Outlined" MaxHeight="480"
+                         SearchFunc="async (text, token) => await Search(text)" DebounceInterval="0"
+                         ValueChanged="OnSearchResult" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" AdornmentAriaLabel="Search adornment"
+                         aria-keyshortcuts="Control+K">
+            <ItemTemplate Context="result">
+                <MudText>@result.Title</MudText> <MudText Typo="Typo.body2">@result.SubTitle</MudText>
+            </ItemTemplate>
+        </MudAutocomplete>
+
+        <!-- Divider next to search bar -->
+        <MudDivider FlexItem="true" Vertical="true" DividerType="DividerType.Middle" Class="mx-4 my-4" />
+    }
+    else
+    {
+        <!-- If search bar is hidden, show search icon instead -->
+        <MudTooltip Text="Search (Ctrl+K)">
+            <MudIconButton Icon="@Icons.Material.Rounded.Search" Color="Color.Inherit" OnClick="@(() => OpenSearchDialog())" aria-label="Open search dialog" aria-keyshortcuts="Control+K" />
+        </MudTooltip>
+    }
+
+    <!-- Extra app bar buttons (custom component) -->
+    <AppbarButtons />
+
+    <!-- GitHub link button -->
+    <MudTooltip Text="GitHub">
+        <MudIconButton Href="https://github.com/MudBlazor/MudBlazor/" Target="_blank" Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" aria-label="Open GitHub repository" />
+    </MudTooltip>
+
+@if (!isAuthenticated)
+{
+    <!-- REGISTER (Outlined) -->
+    <MudButton Href="/register"
+               Variant="Variant.Outlined"
+               Color="Color.Primary"
+               Class="mx-1">
+        Register
+    </MudButton>
+
+    <!-- LOGIN (Filled / Raised style) -->
+    <MudButton Href="/login"
+               Variant="Variant.Filled"
+               Color="Color.Primary"
+               Class="mx-2">
+        Login
+    </MudButton>
+}
+else
+{
+    <!-- USER AVATAR + MENU -->
+<MudMenu AnchorOrigin="Origin.BottomRight"
+         TransformOrigin="Origin.TopRight"
+         ActivationEvent="@MouseEvent.MouseOver"
+         Dense="true">
+    
+         <!-- Activator -->
+    <ActivatorContent Context="context">
+        <MudBadge Color="Color.Success" Overlap="true" Bordered="true">
+        <MudAvatar
+                   Class="cursor-pointer"
+                   @onclick="context.ToggleAsync">
+            @userName.Substring(0,1)
+        </MudAvatar>
+        </MudBadge>
+    </ActivatorContent>
+
+    <ChildContent>
+
+    <!-- SECTION LABEL -->
+    @* <MudText Class="px-4 pt-2 pb-1"
+             Typo="Typo.caption"
+             Color="Color.Secondary">
+        ACCOUNT
+    </MudText>
+
+    <!-- USER INFO -->
+    <MudText Class="px-4" Typo="Typo.subtitle2">@userName</MudText>
+    <MudText Class="px-4 pb-2" Typo="Typo.caption" Color="Color.Secondary">
+        user@email.com
+    </MudText> *@
+
+    <!-- PROFILE HEADER (Clickable like your UI) -->
+    <MudPaper Class="pa-2 d-flex align-center" Elevation="0">
+
+        <!-- Avatar -->
+        <MudAvatar Size="Size.Medium" Class="mr-3">
+            @userName?.Substring(0,1)
+        </MudAvatar>
+
+        <!-- User Info -->
+        <div class="d-flex flex-column">
+            <MudText Typo="Typo.subtitle2">@userName</MudText>
+            <MudText Typo="Typo.caption" Color="Color.Secondary">
+                userabhishekgupta@email.com
+            </MudText>
+
+            <!-- View Profile Link -->
+            @* <MudLink Href="/profile" Class="mt-1" Style="font-size: 0.8rem;">
+                View and edit Profile
+            </MudLink> *@
+        </div>
+
+    </MudPaper>
+
+    <MudDivider Class="my-1" />
+
+    <!-- Menu Items -->
+    <!-- Profile -->
+    <MudMenuItem Href="/profile" Icon="@Icons.Material.Filled.Person" Label="Profile" />
+
+     <!-- Settings -->
+    <MudMenuItem Href="/settings" Icon="@Icons.Material.Filled.Settings" Label="Settings" />
+
+    <MudDivider />
+
+    <!-- Logout (danger style) -->
+    <MudMenuItem OnClick="@OnButtonClickedAsync" Class="mud-error-text" Icon="@Icons.Material.Filled.Logout" IconColor="Color.Secondary" Label="Logout" />
+     </ChildContent>
+</MudMenu>
+}
+</div>
+
+<!-- ========================= SEARCH DIALOG ========================= -->
+<MudDialog @bind-Visible="IsSearchDialogOpen" Options="_dialogOptions" Class="docs-gray-bg" ContentClass="docs-mobile-dialog-search d-flex flex-column" DefaultFocus="DefaultFocus.FirstChild">
+
+    <!-- Autocomplete search inside dialog -->
+    <DialogContent>
+        <MudAutocomplete @ref="_searchDialogAutocomplete" T="ApiLinkServiceEntry" PopoverClass="docs-mobile-dialog-search-popover" PopoverFixed="@true"
+                         AutoFocus="true" Placeholder="Search (Esc to close)" Clearable="true" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search"
+                         SearchFunc="async (text, token) => await Search(text)" DebounceInterval="0"
+                         ValueChanged="OnSearchResult" OpenChanged="o => _searchDialogAutocompleteOpen = o" ReturnedItemsCountChanged="c => _searchDialogReturnedItemsCount = c">
+            <ItemTemplate Context="result">
+                <MudText>@result.Title</MudText> <MudText Typo="Typo.body2">@result.SubTitle</MudText>
+            </ItemTemplate>
+        </MudAutocomplete>
+
+        <!-- Helper text shown depending on search state -->
+        @* This text element will always be rendered but it's easier to write it this way *@
+        <MudText Typo="Typo.body2" Class="flex-grow-1 mud-text-secondary" Align="Align.Center">
+            @if (!_searchDialogAutocompleteOpen)
+            {
+                @("Use the box above to search the docs")
+            }
+            else if (_searchDialogReturnedItemsCount == 0)
+            {
+                @("No results found")
+            }
+        </MudText>
+    </DialogContent>
+</MudDialog>
+
+
+<!-- ========================= Logout Dialog ========================= -->
+<MudMessageBox @ref="_mudMessageBox" Class="pa-4">
+
+    <!-- Custom Title with Icon -->
+    <TitleContent>
+        <div class="d-flex align-center">
+            <MudIcon Icon="@Icons.Material.Filled.Logout" Color="Color.Error" Size="Size.Large" Class="mr-2" />
+            <MudText Typo="Typo.h6">Application Signoff</MudText>
+        </div>
+    </TitleContent>
+
+    <!-- Message -->
+    <MessageContent>
+        <MudText Typo="Typo.body1">
+            Are you sure you wish to logout?
+        </MudText>
+        <MudDivider Class="mt-3" />
+    </MessageContent>
+
+    <!-- Cancel Button -->
+    <CancelButton>
+        <MudButton Variant="Variant.Outlined" Color="Color.Default">
+            CANCEL
+        </MudButton>
+    </CancelButton>
+
+    <!-- Logout Button -->
+    <YesButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Error" StartIcon="@Icons.Material.Filled.Logout">
+            LOGOUT
+        </MudButton>
+    </YesButton>
+
+</MudMessageBox>

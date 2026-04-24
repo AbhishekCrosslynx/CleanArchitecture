@@ -1,0 +1,71 @@
+﻿<style>
+    .docs-appbar, .docs-menu-list {
+        .mud-autocomplete {
+            max-width: 360px;
+        }
+
+        .mud-button {
+            font-family: 'Public Sans', 'Roboto','Arial','sans-serif';
+            font-size: .875rem;
+            font-weight: 500;
+            line-height: 1.75;
+            letter-spacing: .02857em;
+            text-transform: none;
+        }
+    }
+</style>
+
+<!-- Notifications button -->
+<MudTooltip Text="Notifications">
+    <!-- Badge to indicate new notifications (Dot indicator) -->
+    <MudBadge Color="Color.Secondary" Dot="true" Overlap="true" Visible="_newNotificationsAvailable">
+        <!-- Menu for notifications, with icon and positioning -->
+        <MudMenu Icon="@Icons.Material.Outlined.Notifications" Color="Color.Inherit" AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.TopCenter" PopoverClass="docs-layout-menu-shadow" ListClass="pa-2 docs-menu-list" LockScroll="true" AriaLabel="Notifications">
+
+            <!-- Header for the notifications menu with title and "Mark as read" button -->
+            <div class="d-flex justify-space-between align-center px-2">
+                <MudText Typo="Typo.subtitle2">Notifications</MudText>
+
+                <!-- "Mark as read" button, only enabled when there are new notifications -->
+                <MudButton Disabled="@(_newNotificationsAvailable)" 
+                    OnClick="MarkNotificationAsReadAsync" 
+                    StartIcon="@Icons.Material.Filled.DoneAll" 
+                    Variant="Variant.Text" 
+                    Color="Color.Primary" 
+                    Class="ml-16 mr-n2">Mark as read</MudButton>
+            </div>
+            @if (_messages != null)
+            {
+                <!-- Loop through the first 5 notifications and display them in the menu -->
+                @foreach (var message in _messages.Take(5).Select(kvp => kvp.Key))
+                {
+                    <!-- Each notification item is a clickable link that goes to the full announcement -->
+                    <MudMenuItem Class="px-2 py-0 rounded" Href="@($"/mud/announcements/{message.Id}")">
+                        <MudText Typo="Typo.subtitle2">@message.Title</MudText>
+                        <MudText Typo="Typo.body2">@($"{message.Authors.FirstOrDefault()?.DisplayName} • {message.PublishDate.ToString("MM/dd/yyyy")}")</MudText>
+                    </MudMenuItem>
+                    <!-- Divider between each notification item -->
+                    <MudDivider Class="my-2" />
+                }
+            }
+            else
+            {
+                <!-- Display message when there are no new notifications -->
+                <div class="d-flex justify-center align-center px-2 py-8 relative">
+                    <MudText Class="mud-text-secondary my-12">Nothing new :(</MudText>
+                    <MudBlazorLogo Class="docs-logo-filter mx-16 absolute" />
+                </div>
+            }
+        </MudMenu>
+    </MudBadge>
+</MudTooltip>
+
+<!-- Right-to-Left language toggle button -->
+<MudTooltip Text="@RtlButtonText">
+    <MudIconButton OnClick="@LayoutService.ToggleRightToLeftAsync" Icon="@RtlButtonIcon" Color="Color.Inherit" aria-label="@RtlButtonText" />
+</MudTooltip>
+
+<!-- Dark/Light mode toggle button -->
+<MudTooltip Text="@DarkLightModeButtonText">
+    <MudIconButton OnClick="@LayoutService.CycleDarkLightModeAsync" Icon="@DarkLightModeButtonIcon" Color="Color.Inherit" aria-label="@DarkLightModeButtonText" />
+</MudTooltip>

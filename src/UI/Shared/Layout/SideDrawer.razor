@@ -1,0 +1,62 @@
+﻿<!-- ========================= DRAWER (SIDE NAVIGATION) ========================= -->
+<!-- Drawer (slides in/out) -->
+<MudDrawer @bind-Open="@Open" Elevation="25" Variant="@DrawerVariant.Temporary" aria-label="Navigation Drawer">
+
+    <!-- Drawer toolbar (top of drawer) -->
+    <MudToolBar Dense="true" Gutters="false" Class="px-1 docs-gray-bg">
+        <!-- Close button inside drawer -->
+        <MudTooltip Text="Close Menu">
+            <MudIconButton Icon="@Icons.Material.Rounded.Close" Color="Color.Inherit" OnClick="@ToggleDrawer" aria-label="Toggle drawer" />
+        </MudTooltip>
+        <MudSpacer />
+        <!-- Extra appbar buttons (custom component) -->
+        <AppbarButtons />
+    </MudToolBar>
+
+    <!-- Navigation menu inside drawer -->
+    <MudNavMenu Color="Color.Primary" Margin="Margin.Dense" Rounded="true" Class="pa-2">
+        <MudText Typo="Typo.h6" Class="px-4">My Application</MudText>
+        <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Secondary Text</MudText>
+        <MudDivider Class="my-2" />
+        <!-- Top-level navigation links -->
+        <MudNavLink Href="/getting-started/installation" Icon="@Icons.Material.Filled.PlayCircleOutline" IconColor="Color.Success">Get Started</MudNavLink>
+        <MudNavLink Href="/docs/overview" Icon="@Icons.Material.Filled.Book">Docs</MudNavLink>
+        <MudNavLink Href="/mud/introduction" Icon="@Icons.Material.Filled.Info" Match="NavLinkMatch.All">Learn More</MudNavLink>
+
+        <!-- Custom Navigation Group (Fixed Typo) -->
+        <MudNavGroup Title="Custom" ExpandIcon="@Icons.Material.Filled.ExpandMore">
+            <!-- Subheader: My Custom Projects -->
+            <MudListSubheader Class="mt-4 pl-8 pb-2"><b>My Custom</b></MudListSubheader>
+            <MudNavLink Href="@AppRoutes.Counter" Icon="@Icons.Material.Filled.Timer" Match="NavLinkMatch.Prefix">Counter</MudNavLink>
+            <MudNavLink Href="@AppRoutes.Weather" Icon="@Icons.Material.Filled.WbSunny">Weather</MudNavLink>
+            <MudNavLink Href="@AppRoutes.Dashboard" Icon="@Icons.Material.Filled.Dashboard">Dashboard</MudNavLink>
+            <MudNavLink Href="@AppRoutes.NewOrder" Icon="@Icons.Material.Filled.Add">New Order</MudNavLink>
+            <MudNavLink Href="@AppRoutes.PageWithLandingLayout" Icon="@Icons.Material.Filled.ViewAgenda">With Layout</MudNavLink>
+            <MudNavLink Href="@AppRoutes.PageWithoutLandingLayout" Icon="@Icons.Material.Filled.ViewModule">Without Layout</MudNavLink>
+            <MudNavLink Href="@AppRoutes.Payments" Icon="@Icons.Material.Filled.Payments">Payments</MudNavLink>
+            <MudNavLink Href="@AppRoutes.TaxCalculator" Icon="@Icons.Material.Filled.Calculate">
+                Tax Calculator
+            </MudNavLink>
+        </MudNavGroup>
+
+        <!-- Collapsible group for "Projects" -->
+        <MudNavGroup Title="Projects" ExpandIcon="@Icons.Material.Filled.ExpandMore">
+
+            <!-- Subheader: Official projects -->
+            <MudListSubheader Class="mt-4 pl-8 pb-2"><b>Official</b></MudListSubheader>
+            <MudNavLink Href="https://mudblazor.com/" Icon="@Icons.Material.Filled.Code">MudBlazor</MudNavLink>
+            <MudNavLink Href="https://try.mudblazor.com/" Icon="@Icons.Material.Filled.BrowserUpdated">TryMudBlazor</MudNavLink>
+            <MudNavLink Href="https://github.com/MudBlazor/ThemeManager" Icon="@Icons.Material.Filled.ColorLens">ThemeManager</MudNavLink>
+            <MudNavLink Href="https://github.com/MudBlazor/Templates" Icon="@Icons.Material.Filled.ViewComfy">Templates</MudNavLink>
+
+            <!-- Subheader: Community projects -->
+            <MudListSubheader Class="mt-4 pl-8 pb-2"><b>Community</b></MudListSubheader>
+            <MudNavLink Href="/mud/community/extensions" Icon="@Icons.Material.Filled.Public">CommunityExtensions</MudNavLink>
+        </MudNavGroup>
+    </MudNavMenu>
+</MudDrawer>
+
+@code {
+    [Parameter] public bool Open { get; set; }
+    [Parameter] public EventCallback ToggleDrawer { get; set; }
+}

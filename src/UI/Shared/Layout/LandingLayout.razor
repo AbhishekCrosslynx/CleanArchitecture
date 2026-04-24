@@ -1,0 +1,42 @@
+﻿@inherits LayoutComponentBase
+@layout MainLayout
+
+<style>
+    .mudblazor-docs, .mudblazor-landingpage {
+        .docs-single-link .mud-nav-link {
+            font-weight: 500 !important;
+        }
+    }
+
+    .docs-appbar {
+        z-index: calc(var(--mud-zindex-appbar) + 1);
+    }
+
+</style>
+<!-- ========================= LANDING PAGE LAYOUT ========================= -->
+<MudLayout Class="mudblazor-landingpage">
+
+    <!-- ========================= APPBAR ========================= -->
+    @* <MudAppBar Class="docs-appbar-filter" Color="Color.Inherit" Elevation="0"></MudAppBar> *@
+    <MudAppBar Class="docs-appbar" Elevation="0" Style="background: var(--mud-palette-background)">
+        <!-- Custom Appbar component -->
+        <!-- DrawerToggleCallback = method to open/close the side drawer -->
+        <!-- DisplaySearchBar = false → no inline search bar here -->
+        <Appbar DrawerToggleCallback="ToggleDrawer" DisplaySearchBar="false" />
+    </MudAppBar>
+
+    <!-- Drawer (slides in/out) -->
+    <SideDrawer Open="@_drawerOpen" ToggleDrawer="ToggleDrawer" />
+
+    <!-- ========================= MAIN CONTENT ========================= -->
+    <MudMainContent>
+        <!-- Body placeholder → page content will be injected here -->
+        @Body
+
+        <!-- Footer component -->
+        <LandingFooter />
+        <MudScrollToTop TopOffset="400" Style="z-index:2000;">
+            <MudFab StartIcon="@Icons.Material.Filled.KeyboardArrowUp" Color="Color.Primary" />
+        </MudScrollToTop>
+    </MudMainContent>
+</MudLayout>

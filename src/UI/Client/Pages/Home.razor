@@ -1,0 +1,32 @@
+﻿@page "/"
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your Client app.
+
+<MudText Typo="Typo.h6">
+    Client is @Text
+</MudText>
+
+<MudButton Variant="Variant.Filled"
+           Color="Color.Primary"
+           OnClick="ButtonOnClick">
+    @ButtonText
+</MudButton>
+
+<Component1></Component1>
+
+@code {
+    string Text { get; set; } = "????";
+    string ButtonText { get; set; } = "Click Me";
+    int ClickCount { get; set; }
+
+    void ButtonOnClick()
+    {
+        ClickCount += 1;
+        Text = $"Awesome x {ClickCount}";
+        ButtonText = "Click Me Again";
+    }
+}

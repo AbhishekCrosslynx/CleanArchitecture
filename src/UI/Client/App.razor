@@ -1,0 +1,21 @@
+﻿@inject IPortalContext Portal
+
+<Router AppAssembly="@typeof(App).Assembly" AdditionalAssemblies="new[] { typeof(Shared.Pages.Counter).Assembly }" NotFoundPage="typeof(NotFound)">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)"/>
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+</Router>
+
+@code {
+    /// <summary>
+    /// Initializes global UI state for the application.
+    /// This runs once when the root component is created.
+    /// </summary>
+    protected override void OnInitialized()
+    {
+        // Set the portal for this UI project (Client app)
+        // This value will be shared across all components via scoped DI
+        Portal.SetPortal(PortalType.Client);
+    }
+}

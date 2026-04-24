@@ -1,0 +1,47 @@
+[
+  {
+    "Name": "UI",
+    "Projects": [
+      {
+        "Path": "src\\UI\\Client\\Client.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      },
+      {
+        "Path": "src\\UI\\Operations\\Operations.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      },
+      {
+        "Path": "src\\UI\\Test\\Test.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      }
+    ]
+  },
+  {
+    "Name": "FullStack",
+    "Projects": [
+      {
+        "Path": "src\\Web.Api\\Web.Api.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      },
+      {
+        "Path": "src\\UI\\Client\\Client.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      },
+      {
+        "Path": "src\\UI\\Operations\\Operations.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      },
+      {
+        "Path": "src\\UI\\Test\\Test.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      }
+    ]
+  }
+]
