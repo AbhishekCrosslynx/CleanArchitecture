@@ -3,6 +3,9 @@
     <File Path=".editorconfig" />
     <File Path="Directory.Build.props" />
     <File Path="Directory.Packages.props" />
+    <File Path=".github\workflows\gated.yml" />
+    <File Path=".github\workflows\ci.yml" />
+    <File Path=".github\dependabot.yml" />
   </Folder>
   <Folder Name="/Aspire/">
     <Project Path="src/Aspire/Aspire.AppHost/Aspire.AppHost.csproj" />
