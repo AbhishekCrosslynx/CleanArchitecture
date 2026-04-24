@@ -132,11 +132,16 @@ jobs:
 
       # -----------------------------------------------------------------------
       # STEP 6 — Run all tests with code coverage
-      # - coverlet.collector is already referenced in all test projects
+      # - --collect "XPlat Code Coverage" activates coverlet.collector which is
+      #   already referenced in every test project via <PackageReference Include="coverlet.collector" />
       # - Cobertura XML is the standard format supported by ReportGenerator
+      # - --logger trx with a unique name per project prevents the three runs from
+      #   overwriting the same .trx file (which was causing WARNING: Overwriting results file).
       # - TRX logger produces structured test result files (viewable in VS)
       # - --no-build: skips rebuild since we just built in Step 5
-      # - All output lands in ./TestResults/
+      # - Results are written to TestResults/ folder per test project
+      # - Each test project writes its own coverage.cobertura.xml under a unique GUID
+      #   sub-folder inside ./TestResults/ — the glob **/coverage.cobertura.xml picks them all up.
       # -----------------------------------------------------------------------
       - name: Run tests with coverage
         run: |
@@ -145,9 +150,7 @@ jobs:
             --no-build \
             --logger "trx;LogFileName=test-results.trx" \
             --results-directory ./TestResults \
-            /p:CollectCoverage=true \
-            /p:CoverletOutputFormat=cobertura \
-            /p:CoverletOutput=./TestResults/coverage.cobertura.xml
+            --collect "XPlat Code Coverage" \
 
       # -----------------------------------------------------------------------
       # STEP 7 — Install ReportGenerator
