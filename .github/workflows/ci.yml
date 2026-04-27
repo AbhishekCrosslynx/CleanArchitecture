@@ -47,6 +47,23 @@ on:
       - dev
       - main
 
+  # Allows manual trigger from GitHub Actions UI → Actions tab → CI → Run workflow
+  # You can select any branch from the dropdown before running.
+  # NOTE: Deploy to GitHub Pages will also run on manual triggers (same as push).
+  # PRs are the only event that validates WITHOUT deploying.
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Reason for manual run (optional)'
+        required: false
+        default: 'Manual trigger'
+
+# Cancels stale in-progress runs on the same branch when a new commit is pushed.
+# Prevents wasting runner minutes on outdated code.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   ci:
     name: CI Pipeline
@@ -101,24 +118,41 @@ jobs:
           grep "<TargetFramework>" Directory.Build.props || echo "No TargetFramework found in Directory.Build.props"
 
       # -----------------------------------------------------------------------
-      # STEP 3 — Restore NuGet packages
+      # STEP 3 — Cache NuGet packages
+      # Speeds up builds by caching downloaded NuGet packages located in:
+      # ~/.nuget/packages
+      #
+      # Cache key is based on all .csproj files and central package management
+      # (Directory.Packages.props), so changes to dependencies invalidate cache.
+      # -----------------------------------------------------------------------
+      - name: Cache NuGet packages
+        uses: actions/cache@v5
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ runner.os }}-${{ hashFiles('**/*.csproj', '**/Directory.Packages.props') }}
+          restore-keys: nuget-${{ runner.os }}-
+
+      # -----------------------------------------------------------------------
+      # STEP 4 — Restore NuGet packages for the entire solution
       # Downloads all packages declared in .csproj files and
       # Directory.Packages.props (central package management).
+      # Uses cached packages when available to speed up restore.
       # -----------------------------------------------------------------------
       - name: Restore NuGet packages
         run: dotnet restore CleanArchitecture.slnx
 
       # -----------------------------------------------------------------------
-      # STEP 4 — Enforce code formatting
-      # --verify-no-changes makes this a read-only check.
-      # The build FAILS if any file does not comply with .editorconfig rules.
-      # Developers must run `dotnet format` locally before pushing.
+      # STEP 5 — Enforce code formatting
+      # --verify-no-changes makes this a read-only check — the build FAILS
+      # if any file does not comply with the formatting rules in .editorconfig.
+      # This enforces consistent code style across all contributors.
+      # Every developer must run `dotnet format` locally before pushing.
       # -----------------------------------------------------------------------
       - name: Check code formatting (dotnet format)
         run: dotnet format CleanArchitecture.slnx --verify-no-changes --no-restore
 
       # -----------------------------------------------------------------------
-      # STEP 5 — Build entire solution in Release mode
+      # STEP 6 — Build entire solution in Release mode
       # Builds ALL projects in the solution:
       #   - Domain, Application, Infrastructure, SharedKernel
       #   - Web.Api
@@ -131,14 +165,15 @@ jobs:
         run: dotnet build CleanArchitecture.slnx --configuration Release --no-restore
 
       # -----------------------------------------------------------------------
-      # STEP 6 — Run all tests with code coverage
+      # STEP 7 — Run all tests with code coverage
       # - --collect "XPlat Code Coverage" activates coverlet.collector which is
       #   already referenced in every test project via <PackageReference Include="coverlet.collector" />
       # - Cobertura XML is the standard format supported by ReportGenerator
       # - --logger trx with a unique name per project prevents the three runs from
       #   overwriting the same .trx file (which was causing WARNING: Overwriting results file).
       # - TRX logger produces structured test result files (viewable in VS)
-      # - --no-build: skips rebuild since we just built in Step 5
+      # - --no-build: skips compiling/rebuild since we just built in Step 6
+      # - --no-restore: skips re-downloading packages/restore since we already did it in Step 4
       # - Results are written to TestResults/ folder per test project
       # - Each test project writes its own coverage.cobertura.xml under a unique GUID
       #   sub-folder inside ./TestResults/ — the glob **/coverage.cobertura.xml picks them all up.
@@ -148,12 +183,33 @@ jobs:
           dotnet test CleanArchitecture.slnx \
             --configuration Release \
             --no-build \
+            --no-restore \
             --logger "trx;LogFileName=test-results.trx" \
             --results-directory ./TestResults \
             --collect "XPlat Code Coverage" \
 
       # -----------------------------------------------------------------------
-      # STEP 7 — Install ReportGenerator
+      # STEP 8 — Cache .NET global tools
+      # Speeds up CI by caching globally installed dotnet tools such as:
+      #   - dotnet-reportgenerator-globaltool
+      #
+      # Without this cache, tools must be reinstalled on every pipeline run,
+      # even if version has not changed.
+      #
+      # Cached location:
+      #   ~/.dotnet/tools
+      #
+      # Cache key is OS-based since tool contents are restored via install step.
+      # -----------------------------------------------------------------------
+      - name: Cache .NET tools
+        uses: actions/cache@v5
+        with:
+          path: ~/.dotnet/tools
+          key: dotnet-tools-${{ runner.os }}
+          restore-keys: dotnet-tools-${{ runner.os }}-
+
+      # -----------------------------------------------------------------------
+      # STEP 9 — Install ReportGenerator
       # Converts the raw Cobertura XML into a rich HTML report showing
       # per-file, per-class, and per-line coverage details.
       # Installed as a global dotnet tool — available for the rest of the job.
@@ -162,7 +218,7 @@ jobs:
         run: dotnet tool install --global dotnet-reportgenerator-globaltool
 
       # -----------------------------------------------------------------------
-      # STEP 8 — Generate HTML coverage report
+      # STEP 10 — Generate HTML coverage report
       # Merges all coverage XML files (one per test project) into a single
       # unified HTML report written to ./TestResults/CoverageReport/
       # TextSummary produces a plain-text summary for the next step.
@@ -175,7 +231,7 @@ jobs:
             -reporttypes:"Html;Cobertura;TextSummary"
 
       # -----------------------------------------------------------------------
-      # STEP 9 — Print coverage summary to the Actions log
+      # STEP 11 — Print coverage summary to the Actions log
       # Displays coverage % directly in the CI run output so you don't have
       # to download the artifact just to check the overall coverage number.
       # -----------------------------------------------------------------------
@@ -183,7 +239,7 @@ jobs:
         run: cat ./TestResults/CoverageReport/Summary.txt || echo "Coverage summary not available"
 
       # -----------------------------------------------------------------------
-      # STEP 10 — Upload test results (.trx files) as artifact
+      # STEP 12 — Upload test results (.trx files) as artifact
       # if: always() — runs even when tests fail so failures can be investigated.
       # Download from the Actions run summary page in GitHub.
       # -----------------------------------------------------------------------
@@ -195,7 +251,7 @@ jobs:
           path: ./TestResults/**/*.trx
 
       # -----------------------------------------------------------------------
-      # STEP 11 — Upload HTML coverage report as artifact
+      # STEP 13 — Upload HTML coverage report as artifact
       # Download this from the Actions run summary to browse coverage locally
       # in a browser. Open index.html inside the downloaded zip.
       # -----------------------------------------------------------------------
@@ -233,14 +289,14 @@ jobs:
       # =======================================================================
 
       # -----------------------------------------------------------------------
-      # STEP 12 — Publish Client Blazor WASM portal
+      # STEP 14 — Publish Client Blazor WASM portal
       # src/UI/Client/Client.csproj → ./client_release/
       # -----------------------------------------------------------------------
       - name: Publish Client portal
         run: dotnet publish src/UI/Client/Client.csproj --configuration Release --output ./client_release
 
       # -----------------------------------------------------------------------
-      # STEP 13 — Fix Client base href & add routing support files
+      # STEP 15 — Fix Client base href & add routing support files
       # Changes <base href="/" /> to <base href="/<repo>/client/" />
       # github.event.repository.name resolves to the actual repo name at runtime.
       # -----------------------------------------------------------------------
@@ -252,14 +308,14 @@ jobs:
           touch ./client_release/wwwroot/.nojekyll
 
       # -----------------------------------------------------------------------
-      # STEP 14 — Publish Operations Blazor WASM portal
+      # STEP 16 — Publish Operations Blazor WASM portal
       # src/UI/Operations/Operations.csproj → ./operations_release/
       # -----------------------------------------------------------------------
       - name: Publish Operations portal
         run: dotnet publish src/UI/Operations/Operations.csproj --configuration Release --output ./operations_release
 
       # -----------------------------------------------------------------------
-      # STEP 15 — Fix Operations base href & add routing support files
+      # STEP 17 — Fix Operations base href & add routing support files
       # -----------------------------------------------------------------------
       - name: Fix Operations base href for GitHub Pages and add 404.html + .nojekyll
         run: |
@@ -269,7 +325,7 @@ jobs:
           touch ./operations_release/wwwroot/.nojekyll
 
       # -----------------------------------------------------------------------
-      # STEP 16 — Publish Test Blazor WASM portal
+      # STEP 18 — Publish Test Blazor WASM portal
       # src/UI/Test/Test.csproj → ./test_release/
       # This portal uses BlazorWasmPreRendering.Build for pre-rendering support.
       # -----------------------------------------------------------------------
@@ -277,7 +333,7 @@ jobs:
         run: dotnet publish src/UI/Test/Test.csproj --configuration Release --output ./test_release
 
       # -----------------------------------------------------------------------
-      # STEP 17 — Fix Test base href & add routing support files
+      # STEP 19 — Fix Test base href & add routing support files
       # -----------------------------------------------------------------------
       - name: Fix Test base href and add 404.html + .nojekyll
         run: |
@@ -287,7 +343,7 @@ jobs:
           touch ./test_release/wwwroot/.nojekyll
 
       # -----------------------------------------------------------------------
-      # STEP 18 — Assemble unified deploy/ folder
+      # STEP 20 — Assemble unified deploy/ folder
       # All three portals are merged under their respective sub-paths:
       #
       #   deploy/
@@ -312,18 +368,19 @@ jobs:
           ls -la deploy/test/
 
       # -----------------------------------------------------------------------
-      # STEP 19 — Deploy to GitHub Pages
+      # STEP 21 — Deploy to GitHub Pages
       # peaceiris/actions-gh-pages@v4.0.0 pushes ./deploy to the gh-pages branch.
       #
       # PREREQUISITE (one-time setup in GitHub):
       #   Repo → Settings → Pages → Source → Deploy from branch → gh-pages → / (root)
       #
-      # Only runs on push to dev/main — PRs validate but do NOT deploy.
+      # Runs on push to dev/main AND on manual workflow_dispatch triggers.
+      # PRs only validate — they do NOT deploy (avoids deploying unmerged code).
       # GITHUB_TOKEN is automatically injected by GitHub Actions (no secret needed).
       # commit_message includes the commit SHA for full traceability.
       # -----------------------------------------------------------------------
       - name: Deploy to GitHub Pages
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
         uses: peaceiris/actions-gh-pages@v4.0.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

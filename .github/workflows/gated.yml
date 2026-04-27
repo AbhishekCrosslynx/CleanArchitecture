@@ -36,6 +36,21 @@ on:
     branches:
       - '**'
 
+  # Allows manual trigger from GitHub Actions UI → Actions tab → Gated Build → Run workflow
+  # You can select any branch from the dropdown before running
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Reason for manual run (optional)'
+        required: false
+        default: 'Manual trigger'
+
+# Cancels stale in-progress runs on the same branch when a new commit is pushed.
+# Prevents wasting runner minutes on outdated code.
+concurrency:
+  group: gated-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   gated:
     name: Gated Quality Check
@@ -56,6 +71,9 @@ jobs:
       # STEP 2 — Log environment details
       # Captures the exact OS, .NET SDKs, runtimes, and target frameworks
       # active on this runner. Makes version-related failures easy to diagnose.
+      #
+      # NOTE: This project uses Directory.Build.props for TargetFramework,
+      # so we only need to grep that file — not individual .csproj files.
       # -----------------------------------------------------------------------
       - name: Log environment details
         run: |
@@ -79,15 +97,31 @@ jobs:
           grep "<TargetFramework>" Directory.Build.props || echo "No TargetFramework found in Directory.Build.props"
 
       # -----------------------------------------------------------------------
-      # STEP 3 — Restore NuGet packages for the entire solution
+      # STEP 3 — Cache NuGet packages
+      # Speeds up builds by caching downloaded NuGet packages located in:
+      # ~/.nuget/packages
+      #
+      # Cache key is based on all .csproj files and central package management
+      # (Directory.Packages.props), so changes to dependencies invalidate cache.
+      # -----------------------------------------------------------------------
+      - name: Cache NuGet packages
+        uses: actions/cache@v5
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ runner.os }}-${{ hashFiles('**/*.csproj', '**/Directory.Packages.props') }}
+          restore-keys: nuget-${{ runner.os }}-
+
+      # -----------------------------------------------------------------------
+      # STEP 4 — Restore NuGet packages for the entire solution
       # Downloads all packages declared in .csproj files and
       # Directory.Packages.props (central package management).
+      # Uses cached packages when available to speed up restore.
       # -----------------------------------------------------------------------
       - name: Restore NuGet packages
         run: dotnet restore CleanArchitecture.slnx
 
       # -----------------------------------------------------------------------
-      # STEP 4 — Enforce code formatting
+      # STEP 5 — Enforce code formatting
       # --verify-no-changes makes this a read-only check — the build FAILS
       # if any file does not comply with the formatting rules in .editorconfig.
       # This enforces consistent code style across all contributors.
@@ -97,7 +131,7 @@ jobs:
         run: dotnet format CleanArchitecture.slnx --verify-no-changes --no-restore
 
       # -----------------------------------------------------------------------
-      # STEP 5 — Build entire solution in Release mode
+      # STEP 6 — Build entire solution in Release mode
       # Builds ALL projects in the solution:
       #   - Domain, Application, Infrastructure, SharedKernel
       #   - Web.Api
@@ -110,14 +144,15 @@ jobs:
         run: dotnet build CleanArchitecture.slnx --configuration Release --no-restore
 
       # -----------------------------------------------------------------------
-      # STEP 6 — Run all tests with code coverage
+      # STEP 7 — Run all tests with code coverage
       # - --collect "XPlat Code Coverage" activates coverlet.collector which is
       #   already referenced in every test project via <PackageReference Include="coverlet.collector" />
       # - Cobertura XML is the standard format supported by ReportGenerator
       # - --logger trx with a unique name per project prevents the three runs from
       #   overwriting the same .trx file (which was causing WARNING: Overwriting results file).
       # - TRX logger produces structured test result files (viewable in VS)
-      # - --no-build: skips rebuild since we just built in Step 5
+      # - --no-build: skips compiling/rebuild since we just built in Step 6
+      # - --no-restore: skips re-downloading packages/restore since we already did it in Step 4
       # - Results are written to TestResults/ folder per test project
       # - Each test project writes its own coverage.cobertura.xml under a unique GUID
       #   sub-folder inside ./TestResults/ — the glob **/coverage.cobertura.xml picks them all up.
@@ -127,12 +162,33 @@ jobs:
           dotnet test CleanArchitecture.slnx \
             --configuration Release \
             --no-build \
+            --no-restore \
             --logger "trx;LogFileName=test-results.trx" \
             --results-directory ./TestResults \
             --collect "XPlat Code Coverage" \
 
       # -----------------------------------------------------------------------
-      # STEP 7 — Install ReportGenerator
+      # STEP 8 — Cache .NET global tools
+      # Speeds up CI by caching globally installed dotnet tools such as:
+      #   - dotnet-reportgenerator-globaltool
+      #
+      # Without this cache, tools must be reinstalled on every pipeline run,
+      # even if version has not changed.
+      #
+      # Cached location:
+      #   ~/.dotnet/tools
+      #
+      # Cache key is OS-based since tool contents are restored via install step.
+      # -----------------------------------------------------------------------
+      - name: Cache .NET tools
+        uses: actions/cache@v5
+        with:
+          path: ~/.dotnet/tools
+          key: dotnet-tools-${{ runner.os }}
+          restore-keys: dotnet-tools-${{ runner.os }}-
+
+      # -----------------------------------------------------------------------
+      # STEP 9 — Install ReportGenerator
       # Converts the raw Cobertura XML into a rich HTML report showing
       # per-file, per-class, and per-line coverage details.
       # Installed as a global dotnet tool — available for the rest of the job.
@@ -141,7 +197,7 @@ jobs:
         run: dotnet tool install --global dotnet-reportgenerator-globaltool
 
       # -----------------------------------------------------------------------
-      # STEP 8 — Generate HTML coverage report
+      # STEP 10 — Generate HTML coverage report
       # Merges all coverage XML files (one per test project) into a single
       # unified HTML report written to ./TestResults/CoverageReport/
       # TextSummary produces a plain-text summary for the next step.
@@ -154,7 +210,7 @@ jobs:
             -reporttypes:"Html;Cobertura;TextSummary"
 
       # -----------------------------------------------------------------------
-      # STEP 9 — Print coverage summary to the Actions log
+      # STEP 11 — Print coverage summary to the Actions log
       # Displays coverage % directly in the CI run output so you don't have
       # to download the artifact just to check the overall coverage number.
       # -----------------------------------------------------------------------
@@ -162,7 +218,7 @@ jobs:
         run: cat ./TestResults/CoverageReport/Summary.txt || echo "Coverage summary not available"
 
       # -----------------------------------------------------------------------
-      # STEP 10 — Upload test results (.trx files) as artifact
+      # STEP 12 — Upload test results (.trx files) as artifact
       # if: always() — runs even when tests fail so failures can be investigated.
       # Download from the Actions run summary page in GitHub.
       # -----------------------------------------------------------------------
@@ -174,7 +230,7 @@ jobs:
           path: ./TestResults/**/*.trx
 
       # -----------------------------------------------------------------------
-      # STEP 11 — Upload HTML coverage report as artifact
+      # STEP 13 — Upload HTML coverage report as artifact
       # Download this from the Actions run summary to browse coverage locally
       # in a browser. Open index.html inside the downloaded zip.
       # -----------------------------------------------------------------------
