@@ -1,0 +1,702 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Test</title>
+    <base href="/"/>
+    <link href="_framework/dotnet.irv8lo2uia.js" rel="preload" as="script" fetchpriority="high" crossorigin="anonymous" integrity="sha256-MnhMgu2ax4X2qqmeyvIUwHnpjNLfvz6gcb1VCFnEfag="/>
+    <link rel="stylesheet" href="css/app.css"/>
+    <!-- If you add any scoped CSS files, uncomment the following to load them
+    <link href="Test.styles.css" rel="stylesheet" /> -->
+    <link href="manifest.webmanifest" rel="manifest"/>
+    <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png"/>
+    <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png"/>
+    <script type="importmap">{
+  "imports": {
+    "./_framework/blazor.webassembly.js": "./_framework/blazor.webassembly.zxhwjtv6sc.js",
+    "./_framework/dotnet.js": "./_framework/dotnet.irv8lo2uia.js",
+    "./_framework/dotnet.native.js": "./_framework/dotnet.native.ykrnppwhq2.js",
+    "./_framework/dotnet.runtime.js": "./_framework/dotnet.runtime.peu2mfb29t.js"
+  },
+  "scopes": {},
+  "integrity": {
+    "./_framework/blazor.webassembly.js": "sha256-1xlHuu1iNOJiMMz2BCq95uekwHf6pdpTcgVNKVBboPs=",
+    "./_framework/blazor.webassembly.zxhwjtv6sc.js": "sha256-1xlHuu1iNOJiMMz2BCq95uekwHf6pdpTcgVNKVBboPs=",
+    "./_framework/dotnet.irv8lo2uia.js": "sha256-MnhMgu2ax4X2qqmeyvIUwHnpjNLfvz6gcb1VCFnEfag=",
+    "./_framework/dotnet.js": "sha256-MnhMgu2ax4X2qqmeyvIUwHnpjNLfvz6gcb1VCFnEfag=",
+    "./_framework/dotnet.native.js": "sha256-nheeN4H7Js+avp9nd/sQxdaehbeEx3qriXjiZ3pSw6U=",
+    "./_framework/dotnet.native.ykrnppwhq2.js": "sha256-nheeN4H7Js+avp9nd/sQxdaehbeEx3qriXjiZ3pSw6U=",
+    "./_framework/dotnet.runtime.js": "sha256-cajUr4vA/MpLPWj3omULUOwEQw3i8CE2n8AmDheqWBM=",
+    "./_framework/dotnet.runtime.peu2mfb29t.js": "sha256-cajUr4vA/MpLPWj3omULUOwEQw3i8CE2n8AmDheqWBM="
+  }
+}</script>
+    <!--Mudblazor-->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet"/>
+
+<!-- %%-PRERENDERING-HEADOUTLET-BEGIN-%% -->
+<title>Hello World</title>
+<!-- %%-PRERENDERING-HEADOUTLET-END-%% -->
+</head>
+
+<body>
+    <div id="app">
+<!-- %%-PRERENDERING-BEGIN-%% -->
+<div class="mud-rtl-provider"><style>
+::-webkit-scrollbar {width: 8px;height: 8px;z-index: 1;}
+::-webkit-scrollbar-track {background: transparent;}
+::-webkit-scrollbar-thumb {background: #c4c4c4;border-radius: 1px;}
+::-webkit-scrollbar-thumb:hover {background: #a6a6a6;}
+html, body * {scrollbar-color: #c4c4c4 transparent;scrollbar-width: thin;}
+</style>
+<style>
+    .mud-chart-serie:hover {
+        filter: url(#lighten);
+    }
+
+    .mud-chart-serie-hovered 
+    {
+        filter: url(#lighten);
+    }
+</style>
+
+<style class='mud-theme-provider'>
+:root{
+--mud-palette-black: rgba(39,44,52,1);
+--mud-palette-white: rgba(255,255,255,1);
+--mud-palette-primary: rgba(89,74,226,1);
+--mud-palette-primary-rgb: 89,74,226;
+--mud-palette-primary-text: rgba(255,255,255,1);
+--mud-palette-primary-darken: rgb(62,44,221);
+--mud-palette-primary-lighten: rgb(118,106,231);
+--mud-palette-primary-hover: rgba(89,74,226,0.058823529411764705);
+--mud-palette-secondary: rgba(255,64,129,1);
+--mud-palette-secondary-rgb: 255,64,129;
+--mud-palette-secondary-text: rgba(255,255,255,1);
+--mud-palette-secondary-darken: rgb(255,31,105);
+--mud-palette-secondary-lighten: rgb(255,102,153);
+--mud-palette-secondary-hover: rgba(255,64,129,0.058823529411764705);
+--mud-palette-tertiary: rgba(30,200,165,1);
+--mud-palette-tertiary-rgb: 30,200,165;
+--mud-palette-tertiary-text: rgba(255,255,255,1);
+--mud-palette-tertiary-darken: rgb(25,169,140);
+--mud-palette-tertiary-lighten: rgb(42,223,187);
+--mud-palette-tertiary-hover: rgba(30,200,165,0.058823529411764705);
+--mud-palette-info: rgba(33,150,243,1);
+--mud-palette-info-rgb: 33,150,243;
+--mud-palette-info-text: rgba(255,255,255,1);
+--mud-palette-info-darken: rgb(12,128,223);
+--mud-palette-info-lighten: rgb(71,167,245);
+--mud-palette-info-hover: rgba(33,150,243,0.058823529411764705);
+--mud-palette-success: rgba(0,200,83,1);
+--mud-palette-success-rgb: 0,200,83;
+--mud-palette-success-text: rgba(255,255,255,1);
+--mud-palette-success-darken: rgb(0,163,68);
+--mud-palette-success-lighten: rgb(0,235,98);
+--mud-palette-success-hover: rgba(0,200,83,0.058823529411764705);
+--mud-palette-warning: rgba(255,152,0,1);
+--mud-palette-warning-rgb: 255,152,0;
+--mud-palette-warning-text: rgba(255,255,255,1);
+--mud-palette-warning-darken: rgb(214,129,0);
+--mud-palette-warning-lighten: rgb(255,167,36);
+--mud-palette-warning-hover: rgba(255,152,0,0.058823529411764705);
+--mud-palette-error: rgba(244,67,54,1);
+--mud-palette-error-rgb: 244,67,54;
+--mud-palette-error-text: rgba(255,255,255,1);
+--mud-palette-error-darken: rgb(242,28,13);
+--mud-palette-error-lighten: rgb(246,96,85);
+--mud-palette-error-hover: rgba(244,67,54,0.058823529411764705);
+--mud-palette-dark: rgba(17,14,45,1);
+--mud-palette-dark-rgb: 17,14,45;
+--mud-palette-dark-text: rgba(255,255,255,1);
+--mud-palette-dark-darken: rgb(6,5,16);
+--mud-palette-dark-lighten: rgb(26,22,67);
+--mud-palette-dark-hover: rgba(17,14,45,0.058823529411764705);
+--mud-palette-text-primary: rgba(66,66,66,1);
+--mud-palette-text-primary-rgb: 66,66,66;
+--mud-palette-text-secondary: rgba(66,84,102,1);
+--mud-palette-text-secondary-rgb: 66,84,102;
+--mud-palette-text-disabled: rgba(0,0,0,0.3764705882352941);
+--mud-palette-text-disabled-rgb: 0,0,0;
+--mud-palette-action-default: rgba(0,0,0,0.5372549019607843);
+--mud-palette-action-default-hover: rgba(0,0,0,0.058823529411764705);
+--mud-palette-action-disabled: rgba(0,0,0,0.25882352941176473);
+--mud-palette-action-disabled-background: rgba(0,0,0,0.11764705882352941);
+--mud-palette-surface: rgba(255,255,255,1);
+--mud-palette-surface-rgb: 255,255,255;
+--mud-palette-background: rgba(255,255,255,1);
+--mud-palette-background-gray: rgba(249,250,252,1);
+--mud-palette-drawer-background: rgba(255,255,255,1);
+--mud-palette-drawer-text: rgba(66,66,66,1);
+--mud-palette-drawer-icon: rgba(97,97,97,1);
+--mud-palette-appbar-background: rgba(0,0,0,0);
+--mud-palette-appbar-text: rgba(66,66,66,1);
+--mud-palette-lines-default: rgba(0,0,0,0.11764705882352941);
+--mud-palette-lines-inputs: rgba(189,189,189,1);
+--mud-palette-table-lines: rgba(224,224,224,1);
+--mud-palette-table-striped: rgba(0,0,0,0.0196078431372549);
+--mud-palette-table-hover: rgba(0,0,0,0.0392156862745098);
+--mud-palette-divider: rgba(224,224,224,1);
+--mud-palette-divider-rgb: 224,224,224;
+--mud-palette-divider-light: rgba(0,0,0,0.8);
+--mud-palette-skeleton: rgba(0,0,0,0.10980392156862745);
+--mud-palette-gray-default: #4B5563;
+--mud-palette-gray-light: #9CA3AF;
+--mud-palette-gray-lighter: #adbdccff;
+--mud-palette-gray-dark: #757575;
+--mud-palette-gray-darker: #616161;
+--mud-palette-overlay-dark: rgba(33,33,33,0.4980392156862745);
+--mud-palette-overlay-light: rgba(255,255,255,0.4980392156862745);
+--mud-palette-border-opacity: 1;
+--mud-ripple-color: var(--mud-palette-text-primary);
+--mud-ripple-opacity: 0.1;
+--mud-ripple-opacity-secondary: 0.2;
+--mud-elevation-0: none;
+--mud-elevation-1: 0 2px 4px -1px rgba(6, 24, 44, 0.2);
+--mud-elevation-2: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);
+--mud-elevation-3: 0 30px 60px rgba(0,0,0,0.12);
+--mud-elevation-4: 0 6px 12px -2px rgba(50,50,93,0.25),0 3px 7px -3px rgba(0,0,0,0.3);
+--mud-elevation-5: 0 50px 100px -20px rgba(50,50,93,0.25),0 30px 60px -30px rgba(0,0,0,0.3);
+--mud-elevation-6: 0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12);
+--mud-elevation-7: 0px 4px 5px -2px rgba(0,0,0,0.2),0px 7px 10px 1px rgba(0,0,0,0.14),0px 2px 16px 1px rgba(0,0,0,0.12);
+--mud-elevation-8: 0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);
+--mud-elevation-9: 0px 5px 6px -3px rgba(0,0,0,0.2),0px 9px 12px 1px rgba(0,0,0,0.14),0px 3px 16px 2px rgba(0,0,0,0.12);
+--mud-elevation-10: 0px 6px 6px -3px rgba(0,0,0,0.2),0px 10px 14px 1px rgba(0,0,0,0.14),0px 4px 18px 3px rgba(0,0,0,0.12);
+--mud-elevation-11: 0px 6px 7px -4px rgba(0,0,0,0.2),0px 11px 15px 1px rgba(0,0,0,0.14),0px 4px 20px 3px rgba(0,0,0,0.12);
+--mud-elevation-12: 0px 7px 8px -4px rgba(0,0,0,0.2),0px 12px 17px 2px rgba(0,0,0,0.14),0px 5px 22px 4px rgba(0,0,0,0.12);
+--mud-elevation-13: 0px 7px 8px -4px rgba(0,0,0,0.2),0px 13px 19px 2px rgba(0,0,0,0.14),0px 5px 24px 4px rgba(0,0,0,0.12);
+--mud-elevation-14: 0px 7px 9px -4px rgba(0,0,0,0.2),0px 14px 21px 2px rgba(0,0,0,0.14),0px 5px 26px 4px rgba(0,0,0,0.12);
+--mud-elevation-15: 0px 8px 9px -5px rgba(0,0,0,0.2),0px 15px 22px 2px rgba(0,0,0,0.14),0px 6px 28px 5px rgba(0,0,0,0.12);
+--mud-elevation-16: 0px 8px 10px -5px rgba(0,0,0,0.2),0px 16px 24px 2px rgba(0,0,0,0.14),0px 6px 30px 5px rgba(0,0,0,0.12);
+--mud-elevation-17: 0px 8px 11px -5px rgba(0,0,0,0.2),0px 17px 26px 2px rgba(0,0,0,0.14),0px 6px 32px 5px rgba(0,0,0,0.12);
+--mud-elevation-18: 0px 9px 11px -5px rgba(0,0,0,0.2),0px 18px 28px 2px rgba(0,0,0,0.14),0px 7px 34px 6px rgba(0,0,0,0.12);
+--mud-elevation-19: 0px 9px 12px -6px rgba(0,0,0,0.2),0px 19px 29px 2px rgba(0,0,0,0.14),0px 7px 36px 6px rgba(0,0,0,0.12);
+--mud-elevation-20: 0px 10px 13px -6px rgba(0,0,0,0.2),0px 20px 31px 3px rgba(0,0,0,0.14),0px 8px 38px 7px rgba(0,0,0,0.12);
+--mud-elevation-21: 0px 10px 13px -6px rgba(0,0,0,0.2),0px 21px 33px 3px rgba(0,0,0,0.14),0px 8px 40px 7px rgba(0,0,0,0.12);
+--mud-elevation-22: 0px 10px 14px -6px rgba(0,0,0,0.2),0px 22px 35px 3px rgba(0,0,0,0.14),0px 8px 42px 7px rgba(0,0,0,0.12);
+--mud-elevation-23: 0 50px 100px -20px rgba(50, 50, 93, 0.25), 0 30px 60px -30px rgba(0, 0, 0, 0.30);
+--mud-elevation-24: 2.8px 2.8px 2.2px rgba(0, 0, 0, 0.02),6.7px 6.7px 5.3px rgba(0, 0, 0, 0.028),12.5px 12.5px 10px rgba(0, 0, 0, 0.035),22.3px 22.3px 17.9px rgba(0, 0, 0, 0.042),41.8px 41.8px 33.4px rgba(0, 0, 0, 0.05),100px 100px 80px rgba(0, 0, 0, 0.07);
+--mud-elevation-25: 0px 0px 20px 0px rgba(0, 0, 0, 0.05);
+--mud-default-borderradius: 6px;
+--mud-drawer-width-left: 240px;
+--mud-drawer-width-right: 240px;
+--mud-drawer-width-mini-left: 56px;
+--mud-drawer-width-mini-right: 56px;
+--mud-appbar-height: 64px;
+--mud-typography-default-family: 'Public Sans', Roboto, Arial, sans-serif;
+--mud-typography-default-size: .875rem;
+--mud-typography-default-weight: 400;
+--mud-typography-default-lineheight: 1.43;
+--mud-typography-default-letterspacing: normal;
+--mud-typography-default-text-transform: none;
+--mud-typography-h1-family: 'Public Sans', Roboto, Arial, sans-serif;
+--mud-typography-h1-size: 4rem;
+--mud-typography-h1-weight: 700;
+--mud-typography-h1-lineheight: 1.167;
+--mud-typography-h1-letterspacing: -.01562em;
+--mud-typography-h1-text-transform: none;
+--mud-typography-h2-family: 'Public Sans', Roboto, Arial, sans-serif;
+--mud-typography-h2-size: 3.75rem;
+--mud-typography-h2-weight: 300;
+--mud-typography-h2-lineheight: 1.2;
+--mud-typography-h2-letterspacing: -.00833em;
+--mud-typography-h2-text-transform: none;
+--mud-typography-h3-family: 'Public Sans', Roboto, Arial, sans-serif;
+--mud-typography-h3-size: 3rem;
+--mud-typography-h3-weight: 600;
+--mud-typography-h3-lineheight: 1.8;
+--mud-typography-h3-letterspacing: 0;
+--mud-typography-h3-text-transform: none;
+--mud-typography-h4-family: 'Public Sans', Roboto, Arial, sans-serif;
+--mud-typography-h4-size: 1.8rem;
+--mud-typography-h4-weight: 700;
+--mud-typography-h4-lineheight: 1.235;
+--mud-typography-h4-letterspacing: .00735em;
+--mud-typography-h4-text-transform: none;
+--mud-typography-h5-family: 'Public Sans', Roboto, Arial, sans-serif;
+--mud-typography-h5-size: 1.8rem;
+--mud-typography-h5-weight: 700;
+--mud-typography-h5-lineheight: 2;
+--mud-typography-h5-letterspacing: 0;
+--mud-typography-h5-text-transform: none;
+--mud-typography-h6-family: 'Public Sans', Roboto, Arial, sans-serif;
+--mud-typography-h6-size: 1.125rem;
+--mud-typography-h6-weight: 700;
+--mud-typography-h6-lineheight: 2;
+--mud-typography-h6-letterspacing: .0075em;
+--mud-typography-h6-text-transform: none;
+--mud-typography-subtitle1-family: 'Public Sans', Roboto, Arial, sans-serif;
+--mud-typography-subtitle1-size: 1.1rem;
+--mud-typography-subtitle1-weight: 500;
+--mud-typography-subtitle1-lineheight: 1.75;
+--mud-typography-subtitle1-letterspacing: .00938em;
+--mud-typography-subtitle1-text-transform: none;
+--mud-typography-subtitle2-family: 'Public Sans', Roboto, Arial, sans-serif;
+--mud-typography-subtitle2-size: 1rem;
+--mud-typography-subtitle2-weight: 600;
+--mud-typography-subtitle2-lineheight: 1.8;
+--mud-typography-subtitle2-letterspacing: .00714em;
+--mud-typography-subtitle2-text-transform: none;
+--mud-typography-body1-family: 'Public Sans', Roboto, Arial, sans-serif;
+--mud-typography-body1-size: 1rem;
+--mud-typography-body1-weight: 400;
+--mud-typography-body1-lineheight: 1.5;
+--mud-typography-body1-letterspacing: .00938em;
+--mud-typography-body1-text-transform: none;
+--mud-typography-body2-family: 'Public Sans', Roboto, Arial, sans-serif;
+--mud-typography-body2-size: .875rem;
+--mud-typography-body2-weight: 400;
+--mud-typography-body2-lineheight: 1.43;
+--mud-typography-body2-letterspacing: .01071em;
+--mud-typography-body2-text-transform: none;
+--mud-typography-button-family: 'Public Sans', Roboto, Arial, sans-serif;
+--mud-typography-button-size: .875rem;
+--mud-typography-button-weight: 500;
+--mud-typography-button-lineheight: 1.75;
+--mud-typography-button-letterspacing: .02857em;
+--mud-typography-button-text-transform: none;
+--mud-typography-caption-family: 'Public Sans', Roboto, Arial, sans-serif;
+--mud-typography-caption-size: .75rem;
+--mud-typography-caption-weight: 400;
+--mud-typography-caption-lineheight: 1.66;
+--mud-typography-caption-letterspacing: .03333em;
+--mud-typography-caption-text-transform: none;
+--mud-typography-overline-family: 'Public Sans', Roboto, Arial, sans-serif;
+--mud-typography-overline-size: .75rem;
+--mud-typography-overline-weight: 400;
+--mud-typography-overline-lineheight: 2.66;
+--mud-typography-overline-letterspacing: .08333em;
+--mud-typography-overline-text-transform: none;
+--mud-zindex-drawer: 1100;
+--mud-zindex-appbar: 1300;
+--mud-zindex-dialog: 1400;
+--mud-zindex-popover: 1200;
+--mud-zindex-snackbar: 1500;
+--mud-zindex-tooltip: 1600;
+--mud-native-html-color-scheme: light;
+}
+</style>
+
+    <div class="mud-popover-provider"><div id="popovercontent-86b0de3a-cd45-4163-9738-9529c109d676" data-ticks="0" class="mud-popover mud-popover-top-center mud-popover-anchor-bottom-center mud-popover-overflow-flip-always mud-tooltip d-flex mud-tooltip-default mud-tooltip-bottom-center" style="transition-duration:251ms;transition-delay:0ms;"></div><div id="popovercontent-c8a535aa-c135-4160-94f0-20d5ff571eb1" data-ticks="0" class="mud-popover mud-popover-top-center mud-popover-anchor-bottom-center mud-popover-overflow-flip-always mud-tooltip d-flex mud-tooltip-default mud-tooltip-bottom-center" style="transition-duration:251ms;transition-delay:0ms;"></div><div id="popovercontent-7f5b302d-ae8b-4df4-8d79-2eab073336fa" data-ticks="0" class="mud-popover mud-popover-top-center mud-popover-anchor-bottom-center mud-popover-overflow-flip-always mud-tooltip d-flex mud-tooltip-default mud-tooltip-bottom-center" style="transition-duration:251ms;transition-delay:0ms;"></div><div id="popovercontent-b8fd92be-0db7-4f54-9bce-e1d341436f6e" data-ticks="0" class="mud-popover mud-popover-top-center mud-popover-anchor-bottom-center mud-popover-overflow-flip-always mud-tooltip d-flex mud-tooltip-default mud-tooltip-bottom-center" style="transition-duration:251ms;transition-delay:0ms;"></div><div id="popovercontent-054b6d53-3e62-41c7-aae0-4f96307034c1" data-ticks="0" class="mud-popover mud-popover-top-center mud-popover-anchor-bottom-center mud-popover-overflow-flip-always mud-tooltip d-flex mud-tooltip-default mud-tooltip-bottom-center" style="transition-duration:251ms;transition-delay:0ms;"></div><div id="popovercontent-791974df-9893-4a3a-bd52-f6cd33295607" data-ticks="0" data-pc-x="0" data-pc-y="0" class="mud-popover mud-popover-top-right mud-popover-anchor-bottom-right mud-popover-overflow-flip-always mud-paper mud-elevation-8" style="transition-duration:0ms;transition-delay:0ms;"></div><div id="popovercontent-15b5f1c0-9ca7-4689-b2cb-79e463c00569" data-ticks="0" class="mud-popover mud-popover-top-center mud-popover-anchor-bottom-center mud-popover-overflow-flip-always mud-tooltip d-flex mud-tooltip-default mud-tooltip-bottom-center" style="transition-duration:251ms;transition-delay:0ms;"></div><div id="popovercontent-f129f714-0185-489b-9d66-05c995443083" data-ticks="0" class="mud-popover mud-popover-top-center mud-popover-anchor-bottom-center mud-popover-overflow-flip-always mud-tooltip d-flex mud-tooltip-default mud-tooltip-bottom-center" style="transition-duration:251ms;transition-delay:0ms;"></div><div id="popovercontent-8624ed3c-b485-4902-9736-beae5443e68a" data-ticks="0" class="mud-popover mud-popover-top-center mud-popover-anchor-bottom-center mud-popover-overflow-flip-always mud-tooltip d-flex mud-tooltip-default mud-tooltip-bottom-center" style="transition-duration:251ms;transition-delay:0ms;"></div><div id="popovercontent-23f40e35-ea6a-40b7-8bd4-779e8a115a2f" data-ticks="0" class="mud-popover mud-popover-top-center mud-popover-anchor-bottom-center mud-popover-overflow-flip-always mud-tooltip d-flex mud-tooltip-default mud-tooltip-bottom-center" style="transition-duration:251ms;transition-delay:0ms;"></div><div id="popovercontent-efdc5af9-0370-4dd3-8a44-0e3503659c68" data-ticks="0" class="mud-popover mud-popover-top-center mud-popover-anchor-bottom-center mud-popover-overflow-flip-always mud-tooltip d-flex mud-tooltip-default mud-tooltip-bottom-center" style="transition-duration:251ms;transition-delay:0ms;"></div><div id="popovercontent-133e992a-bc2a-4d73-832f-8f5495c4409d" data-ticks="0" class="mud-popover mud-popover-top-center mud-popover-anchor-bottom-center mud-popover-overflow-flip-always mud-tooltip d-flex mud-tooltip-default mud-tooltip-bottom-center" style="transition-duration:251ms;transition-delay:0ms;"></div><div id="popovercontent-dff300ae-f505-4a20-bc35-98d46b955e70" data-ticks="0" class="mud-popover mud-popover-top-center mud-popover-anchor-bottom-center mud-popover-overflow-flip-always mud-tooltip d-flex mud-tooltip-default mud-tooltip-bottom-center" style="transition-duration:251ms;transition-delay:0ms;"></div><div id="popovercontent-6474119b-3822-4e5b-8ef8-013ad79c979d" data-ticks="0" data-pc-x="0" data-pc-y="0" class="mud-popover mud-popover-top-center mud-popover-anchor-bottom-left mud-popover-overflow-flip-always mud-paper mud-elevation-8 docs-layout-menu-shadow" style="transition-duration:251ms;transition-delay:0ms;"></div><div id="popovercontent-162ffc3a-5fbe-4fc6-9527-1c683e16a8bc" data-ticks="0" data-pc-x="0" data-pc-y="0" class="mud-popover mud-popover-top-center mud-popover-anchor-bottom-left mud-popover-overflow-flip-always mud-paper mud-elevation-8 docs-layout-menu-shadow" style="transition-duration:251ms;transition-delay:0ms;"></div></div>
+    <div id="mud-snackbar-container" class="mud-snackbar-location-top-right"></div>
+    
+    <style>
+    .mudblazor-docs, .mudblazor-landingpage {
+        .docs-single-link .mud-nav-link {
+            font-weight: 500 !important;
+        }
+    }
+
+    .docs-appbar {
+        z-index: calc(var(--mud-zindex-appbar) + 1);
+    }
+
+</style>
+
+<div class="mud-layout mudblazor-landingpage" style=""><header class="mud-appbar mud-appbar-fixed-top mud-elevation-0 docs-appbar" style="background: var(--mud-palette-background)"><div role="toolbar" class="mud-toolbar mud-toolbar-gutters mud-toolbar-appbar"><style>
+    .docs-mudblazor-logo {
+        width: 40px;
+    }
+
+    .docs-brand-text {
+        letter-spacing: .2rem;
+        font-weight: 400;
+        font-family: 'Roboto';
+        margin-inline-start: 12px;
+        font-size: 24px;
+        user-select: none;
+    }
+    
+    .docs-search-bar {
+        & .mud-input {
+            height: 42px;
+        }
+
+        &.mud-input-control {
+            background-color: var(--mud-palette-gray-light);
+            margin-bottom: 5px;
+            height: 42px;
+            border-radius: var(--mud-default-borderradius);
+        }
+
+        & .mud-input.mud-input-outlined .mud-input-outlined-border {
+            border: none;
+            border-radius: var(--mud-default-borderradius);
+        }
+    }
+
+    .docs-gray-bg {
+        background-color: var(--mud-palette-background-gray);
+    }
+
+    .docs-mobile-dialog-search {
+        height: 400px;
+    }
+
+    .docs-mobile-dialog-search-popover {
+        box-shadow: none !important;
+        margin-top: 8px;
+        background-color: var(--mud-palette-background-gray);
+
+        .mud-list {
+            background-color: var(--mud-palette-background-gray);
+
+            .mud-list-item {
+                background-color: var(--mud-palette-surface);
+                margin: 6px 0;
+                border-radius: 4px;
+
+                .mud-typography-body2 {
+                    font-size: 12px;
+                    font-weight: 500;
+                    color: var(--mud-palette-text-secondary);
+                }
+                @media(hover: hover)
+
+                and (pointer: fine) {
+                    &:hover {
+                        color: var(--mud-palette-primary-text);
+                        background-color: var(--mud-palette-primary);
+
+                        .mud-typography-body2 {
+                            color: var(--mud-palette-primary-text);
+                        }
+                    }
+                }
+
+                &:active {
+                    color: var(--mud-palette-primary-text);
+                    background-color: var(--mud-palette-primary);
+
+                    .mud-typography-body2 {
+                        color: var(--mud-palette-primary-text);
+                    }
+                }
+            }
+        }
+    }
+</style>
+
+
+
+
+<div class="d-flex align-center flex-grow-1 d-md-none"><div class="mud-tooltip-root mud-tooltip-inline"><button aria-label="Toggle drawer" type="button" class="mud-button-root mud-icon-button mud-inherit-text hover:mud-inherit-hover mud-ripple mud-ripple-icon mud-icon-button-edge-start" __internal_stopPropagation_onclick><span class="mud-icon-button-label"><svg class="mud-icon-root mud-svg-icon mud-icon-size-medium" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M20 11H4c-.55 0-1 .45-1 1s.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1zM4 18h10c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zM20 6H4c-.55 0-1 .45-1 1v.01c0 .55.45 1 1 1h16c.55 0 1-.45 1-1V7c0-.55-.45-1-1-1z"/></svg></span></button><div id="popover-86b0de3a-cd45-4163-9738-9529c109d676" class="mud-popover-cascading-value"></div></div>
+    <div aria-hidden="true" class="flex-grow-1"></div>
+    
+    <a href="/" class="d-flex align-center" aria-current="page"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1404 1404" class="docs-mudblazor-logo"><path d="M406.89,219.14c-51.85,6.86-134.7-55.37-142.65-115.43-7.95-60.07,62.01-95.23,113.86-102.09,51.85-6.86,112.62,11.94,120.57,72.01,7.95,60.07-39.93,138.66-91.78,145.52Z" style="fill:#7e6fff;"></path>
+    <path d="M1351.61,490.53c-29.26-77.07-70.13-149.81-121.87-214.05-34.85-43.28-74.24-83.06-118.5-116.66-51.13-38.82-107.18-74.24-169.52-89.6C659.86,.78,682.24,202.58,537.88,264.05c-144.35,61.47-316.15,4.62-409.08,131.03-38.73,52.69-76.68,109.42-100.97,170.37C5.41,621.7-2.93,684,1.05,744.27c7.77,117.64,64.46,245.62,162.39,314.92,34.64,24.51,91.9,55.27,131.4,25.76,19.29-14.41,31.2-37.27,39.96-59.15,25.29-63.2,31.63-134.4,35.72-201.73,4.09-67.39-8.86-285.66,4.07-323.91,10.1-29.89,34.98-51.3,65.12-59.55,37.46-10.25,84.85,1.44,112.4,28.99,11.98,11.98,21.72,26.39,29.24,43.17,7.49,16.78,16.01,38.08,25.62,63.86l55.76,156.52c4.8,13.19,9.9,26.68,15.31,40.45,5.38,13.81,11.24,26.42,17.55,37.79,6.28,11.4,12.88,20.69,19.76,27.9,6.89,7.17,13.96,10.79,21.14,10.79,5.99,0,12.01-3.17,18-9.45,5.99-6.31,11.85-14.7,17.55-25.21,5.7-10.47,11.37-22.61,17.07-36.42,5.7-13.8,11.24-28.47,16.65-44.07l60.28-162.83c8.39-22.77,16.33-42.57,23.83-59.35,7.5-16.78,16.21-30.59,26.07-41.38,9.9-10.79,21.75-18.9,35.55-24.31,13.77-5.38,31.48-8.07,53.07-8.07,16.78,0,31.32,1.63,43.62,4.93,12.3,3.3,22.32,9.77,30.14,19.34,14.5,17.77,17.58,45.82,20.66,68.01,6.54,46.97,1.82,95.87,1.82,143.32v272.45c0,23.37,1.14,47.05,0,70.39-.98,20.03-.76,40.4-10.45,58.74-8.84,16.71-25.19,30.07-43.97,32.23-24.29,2.79-43.71-15.61-52.61-36.6-4.2-9.9-7.05-19.79-8.55-29.69-1.5-9.9-2.24-17.84-2.24-23.83,0,0,10.01-267.01-33.46-261.48-8.83,1.12-28.92,49.45-34.66,61.45-30.1,60.21-107.26,230.27-122.13,251.82-12.03,17.43-28.81,35.72-50.55,39.92-15.19,2.94-29.82-2.71-41.65-12.12-29.45-23.43-42.28-66.81-56.1-100.93-11.3-27.91-84.23-310.38-138.19-317.77-7.14-.98-12.3,12.27-15.31,36.86-3.01,24.6-15.8,456.32,106.49,577.77,174.23,173.02,487.57,157.97,720.78-196.79,113.7-172.96,103.22-422.6,33.4-606.5Z" style="fill:#7e6fff;"></path>
+    <path d="M369.84,537.14s-27.13,411.28-182.45,417.33c-116.75,4.55-168.93-122.4-176.64-144.99,20.77,97.3,72.69,193.09,152.7,249.7,34.64,24.51,91.9,55.26,131.4,25.76,19.29-14.41,31.2-37.27,39.96-59.15,25.29-63.2,31.63-134.4,35.72-201.73,3.34-55.09-4.69-210.9-.67-286.88v-.04Z" style="fill:#5a47ff;"></path></svg>
+        <h5 class="mud-typography mud-typography-h5 mud-primary-text docs-brand-text">TestName</h5></a>
+    <div aria-hidden="true" class="flex-grow-1"></div>
+    
+    <div class="mud-tooltip-root mud-tooltip-inline"><button aria-label="Open search dialog" aria-keyshortcuts="Control&#x2B;K" type="button" class="mud-button-root mud-icon-button mud-inherit-text hover:mud-inherit-hover mud-ripple mud-ripple-icon mud-icon-button-edge-end" __internal_stopPropagation_onclick><span class="mud-icon-button-label"><svg class="mud-icon-root mud-svg-icon mud-icon-size-medium" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M15.5 14h-.79l-.28-.27c1.2-1.4 1.82-3.31 1.48-5.34-.47-2.78-2.79-5-5.59-5.34-4.23-.52-7.79 3.04-7.27 7.27.34 2.8 2.56 5.12 5.34 5.59 2.03.34 3.94-.28 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></span></button><div id="popover-c8a535aa-c135-4160-94f0-20d5ff571eb1" class="mud-popover-cascading-value"></div></div></div>
+
+
+<div class="d-none d-md-flex align-center flex-grow-1"><div class="mud-tooltip-root mud-tooltip-inline"><button aria-label="Toggle drawer" type="button" class="mud-button-root mud-icon-button mud-inherit-text hover:mud-inherit-hover mud-ripple mud-ripple-icon mud-icon-button-edge-start" __internal_stopPropagation_onclick><span class="mud-icon-button-label"><svg class="mud-icon-root mud-svg-icon mud-icon-size-medium" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M20 11H4c-.55 0-1 .45-1 1s.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1zM4 18h10c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zM20 6H4c-.55 0-1 .45-1 1v.01c0 .55.45 1 1 1h16c.55 0 1-.45 1-1V7c0-.55-.45-1-1-1z"/></svg></span></button><div id="popover-7f5b302d-ae8b-4df4-8d79-2eab073336fa" class="mud-popover-cascading-value"></div></div>
+
+    
+    <a href="/" class="d-flex align-center me-4" aria-current="page"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1404 1404" class="docs-mudblazor-logo"><path d="M406.89,219.14c-51.85,6.86-134.7-55.37-142.65-115.43-7.95-60.07,62.01-95.23,113.86-102.09,51.85-6.86,112.62,11.94,120.57,72.01,7.95,60.07-39.93,138.66-91.78,145.52Z" style="fill:#7e6fff;"></path>
+    <path d="M1351.61,490.53c-29.26-77.07-70.13-149.81-121.87-214.05-34.85-43.28-74.24-83.06-118.5-116.66-51.13-38.82-107.18-74.24-169.52-89.6C659.86,.78,682.24,202.58,537.88,264.05c-144.35,61.47-316.15,4.62-409.08,131.03-38.73,52.69-76.68,109.42-100.97,170.37C5.41,621.7-2.93,684,1.05,744.27c7.77,117.64,64.46,245.62,162.39,314.92,34.64,24.51,91.9,55.27,131.4,25.76,19.29-14.41,31.2-37.27,39.96-59.15,25.29-63.2,31.63-134.4,35.72-201.73,4.09-67.39-8.86-285.66,4.07-323.91,10.1-29.89,34.98-51.3,65.12-59.55,37.46-10.25,84.85,1.44,112.4,28.99,11.98,11.98,21.72,26.39,29.24,43.17,7.49,16.78,16.01,38.08,25.62,63.86l55.76,156.52c4.8,13.19,9.9,26.68,15.31,40.45,5.38,13.81,11.24,26.42,17.55,37.79,6.28,11.4,12.88,20.69,19.76,27.9,6.89,7.17,13.96,10.79,21.14,10.79,5.99,0,12.01-3.17,18-9.45,5.99-6.31,11.85-14.7,17.55-25.21,5.7-10.47,11.37-22.61,17.07-36.42,5.7-13.8,11.24-28.47,16.65-44.07l60.28-162.83c8.39-22.77,16.33-42.57,23.83-59.35,7.5-16.78,16.21-30.59,26.07-41.38,9.9-10.79,21.75-18.9,35.55-24.31,13.77-5.38,31.48-8.07,53.07-8.07,16.78,0,31.32,1.63,43.62,4.93,12.3,3.3,22.32,9.77,30.14,19.34,14.5,17.77,17.58,45.82,20.66,68.01,6.54,46.97,1.82,95.87,1.82,143.32v272.45c0,23.37,1.14,47.05,0,70.39-.98,20.03-.76,40.4-10.45,58.74-8.84,16.71-25.19,30.07-43.97,32.23-24.29,2.79-43.71-15.61-52.61-36.6-4.2-9.9-7.05-19.79-8.55-29.69-1.5-9.9-2.24-17.84-2.24-23.83,0,0,10.01-267.01-33.46-261.48-8.83,1.12-28.92,49.45-34.66,61.45-30.1,60.21-107.26,230.27-122.13,251.82-12.03,17.43-28.81,35.72-50.55,39.92-15.19,2.94-29.82-2.71-41.65-12.12-29.45-23.43-42.28-66.81-56.1-100.93-11.3-27.91-84.23-310.38-138.19-317.77-7.14-.98-12.3,12.27-15.31,36.86-3.01,24.6-15.8,456.32,106.49,577.77,174.23,173.02,487.57,157.97,720.78-196.79,113.7-172.96,103.22-422.6,33.4-606.5Z" style="fill:#7e6fff;"></path>
+    <path d="M369.84,537.14s-27.13,411.28-182.45,417.33c-116.75,4.55-168.93-122.4-176.64-144.99,20.77,97.3,72.69,193.09,152.7,249.7,34.64,24.51,91.9,55.26,131.4,25.76,19.29-14.41,31.2-37.27,39.96-59.15,25.29-63.2,31.63-134.4,35.72-201.73,3.34-55.09-4.69-210.9-.67-286.88v-.04Z" style="fill:#5a47ff;"></path></svg>
+        <h5 class="mud-typography mud-typography-h5 mud-primary-text docs-brand-text">TestName</h5></a>
+
+    
+
+
+    <a type="button" href="/counter" class="mud-button-root mud-button mud-button-text mud-button-text-inherit mud-button-text-size-medium mud-ripple mx-1 px-3"><span class="mud-button-label">Counter</span></a>
+
+    <a type="button" href="/weather" class="mud-button-root mud-button mud-button-text mud-button-text-inherit mud-button-text-size-medium mud-ripple mx-1 px-3"><span class="mud-button-label">Weather</span></a>
+
+    <a type="button" href="/page-with-landing-layout" class="mud-button-root mud-button mud-button-text mud-button-text-inherit mud-button-text-size-medium mud-ripple mx-1 px-3"><span class="mud-button-label">With Layout</span></a>
+
+    <a type="button" href="/page-without-landing-layout" class="mud-button-root mud-button mud-button-text mud-button-text-inherit mud-button-text-size-medium mud-ripple mx-1 px-3"><span class="mud-button-label">Without Layout</span></a><div aria-hidden="true" class="flex-grow-1"></div><div class="mud-tooltip-root mud-tooltip-inline"><button aria-label="Open search dialog" aria-keyshortcuts="Control&#x2B;K" type="button" class="mud-button-root mud-icon-button mud-inherit-text hover:mud-inherit-hover mud-ripple mud-ripple-icon" __internal_stopPropagation_onclick><span class="mud-icon-button-label"><svg class="mud-icon-root mud-svg-icon mud-icon-size-medium" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M15.5 14h-.79l-.28-.27c1.2-1.4 1.82-3.31 1.48-5.34-.47-2.78-2.79-5-5.59-5.34-4.23-.52-7.79 3.04-7.27 7.27.34 2.8 2.56 5.12 5.34 5.59 2.03.34 3.94-.28 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></span></button><div id="popover-b8fd92be-0db7-4f54-9bce-e1d341436f6e" class="mud-popover-cascading-value"></div></div><style>
+    .docs-appbar, .docs-menu-list {
+        .mud-autocomplete {
+            max-width: 360px;
+        }
+
+        .mud-button {
+            font-family: 'Public Sans', 'Roboto','Arial','sans-serif';
+            font-size: .875rem;
+            font-weight: 500;
+            line-height: 1.75;
+            letter-spacing: .02857em;
+            text-transform: none;
+        }
+    }
+</style>
+
+
+<div class="mud-tooltip-root mud-tooltip-inline"><span class="mud-badge-root"><div id="mudinput8mr8aczy" class="mud-menu"><button aria-label="Notifications" type="button" class="mud-button-root mud-icon-button mud-inherit-text hover:mud-inherit-hover mud-ripple mud-ripple-icon mud-menu-icon-button-activator" __internal_stopPropagation_onclick><span class="mud-icon-button-label"><svg class="mud-icon-root mud-svg-icon mud-icon-size-medium" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg></span></button><div id="popover-6474119b-3822-4e5b-8ef8-013ad79c979d" class="mud-popover-cascading-value"></div></div></span><div id="popover-15b5f1c0-9ca7-4689-b2cb-79e463c00569" class="mud-popover-cascading-value"></div></div>
+
+
+<div class="mud-tooltip-root mud-tooltip-inline"><button aria-label="Right-to-left" type="button" class="mud-button-root mud-icon-button mud-inherit-text hover:mud-inherit-hover mud-ripple mud-ripple-icon" __internal_stopPropagation_onclick><span class="mud-icon-button-label"><svg class="mud-icon-root mud-svg-icon mud-icon-size-medium" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M0 0h24v24H0z" fill="none"/><path d="M10 10v5h2V4h2v11h2V4h2V2h-8C7.79 2 6 3.79 6 6s1.79 4 4 4zm-2 7v-3l-4 4 4 4v-3h12v-2H8z"/></svg></span></button><div id="popover-f129f714-0185-489b-9d66-05c995443083" class="mud-popover-cascading-value"></div></div>
+
+
+<div class="mud-tooltip-root mud-tooltip-inline"><button aria-label="Light mode" type="button" class="mud-button-root mud-icon-button mud-inherit-text hover:mud-inherit-hover mud-ripple mud-ripple-icon" __internal_stopPropagation_onclick><span class="mud-icon-button-label"><svg class="mud-icon-root mud-svg-icon mud-icon-size-medium" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><rect fill="none" height="24" width="24"/><path d="M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0 c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2 c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1 C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06 c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41 l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41 c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36 c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg></span></button><div id="popover-8624ed3c-b485-4902-9736-beae5443e68a" class="mud-popover-cascading-value"></div></div>
+
+    
+    <div class="mud-tooltip-root mud-tooltip-inline"><a aria-label="Open GitHub repository" type="button" href="https://github.com/MudBlazor/MudBlazor/" target="_blank" rel="noopener" class="mud-button-root mud-icon-button mud-inherit-text hover:mud-inherit-hover mud-ripple mud-ripple-icon"><span class="mud-icon-button-label"><svg class="mud-icon-root mud-svg-icon mud-icon-size-medium" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2 0 1.9 1.2 1.9 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.4 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8 0 3.2.9.8 1.3 1.9 1.3 3.2 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1 .9 2.2v3.3c0 .3.1.7.8.6A12 12 0 0 0 12 .3"/></svg></span></a><div id="popover-054b6d53-3e62-41c7-aae0-4f96307034c1" class="mud-popover-cascading-value"></div></div><div id="mudinput28924rdh" class="mud-menu"><div class="mud-menu-activator" tabindex="0" role="button" aria-haspopup="true"><span class="mud-badge-root"><div role="img" class="mud-avatar mud-avatar-medium mud-avatar-filled mud-avatar-filled-default mud-elevation-0 cursor-pointer" style="">J</div><span class="mud-badge-wrapper mud-badge-top right"><span role="status" aria-live="polite" class="mud-badge mud-badge-bordered mud-badge-top right mud-elevation-0 mud-theme-success mud-badge-overlap"></span></span></span></div><div id="popover-791974df-9893-4a3a-bd52-f6cd33295607" class="mud-popover-cascading-value"></div></div></div>
+
+
+
+
+
+
+</div></header>
+
+    
+    <aside aria-label="Navigation Drawer" class="mud-drawer mud-drawer-fixed mud-drawer-pos-left mud-drawer--closed mud-drawer--initial mud-drawer-md mud-drawer-clipped-never mud-elevation-25 mud-drawer-temporary" style=""><div class="mud-drawer-content"><div role="toolbar" class="mud-toolbar mud-toolbar-dense px-1 docs-gray-bg"><div class="mud-tooltip-root mud-tooltip-inline"><button aria-label="Toggle drawer" type="button" class="mud-button-root mud-icon-button mud-inherit-text hover:mud-inherit-hover mud-ripple mud-ripple-icon" __internal_stopPropagation_onclick><span class="mud-icon-button-label"><svg class="mud-icon-root mud-svg-icon mud-icon-size-medium" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M18.3 5.71c-.39-.39-1.02-.39-1.41 0L12 10.59 7.11 5.7c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L10.59 12 5.7 16.89c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0L12 13.41l4.89 4.89c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02 0-1.4z"/></svg></span></button><div id="popover-23f40e35-ea6a-40b7-8bd4-779e8a115a2f" class="mud-popover-cascading-value"></div></div>
+        <div aria-hidden="true" class="flex-grow-1"></div>
+        
+        <style>
+    .docs-appbar, .docs-menu-list {
+        .mud-autocomplete {
+            max-width: 360px;
+        }
+
+        .mud-button {
+            font-family: 'Public Sans', 'Roboto','Arial','sans-serif';
+            font-size: .875rem;
+            font-weight: 500;
+            line-height: 1.75;
+            letter-spacing: .02857em;
+            text-transform: none;
+        }
+    }
+</style>
+
+
+<div class="mud-tooltip-root mud-tooltip-inline"><span class="mud-badge-root"><div id="mudinputjv95kek2" class="mud-menu"><button aria-label="Notifications" type="button" class="mud-button-root mud-icon-button mud-inherit-text hover:mud-inherit-hover mud-ripple mud-ripple-icon mud-menu-icon-button-activator" __internal_stopPropagation_onclick><span class="mud-icon-button-label"><svg class="mud-icon-root mud-svg-icon mud-icon-size-medium" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg></span></button><div id="popover-162ffc3a-5fbe-4fc6-9527-1c683e16a8bc" class="mud-popover-cascading-value"></div></div></span><div id="popover-efdc5af9-0370-4dd3-8a44-0e3503659c68" class="mud-popover-cascading-value"></div></div>
+
+
+<div class="mud-tooltip-root mud-tooltip-inline"><button aria-label="Right-to-left" type="button" class="mud-button-root mud-icon-button mud-inherit-text hover:mud-inherit-hover mud-ripple mud-ripple-icon" __internal_stopPropagation_onclick><span class="mud-icon-button-label"><svg class="mud-icon-root mud-svg-icon mud-icon-size-medium" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M0 0h24v24H0z" fill="none"/><path d="M10 10v5h2V4h2v11h2V4h2V2h-8C7.79 2 6 3.79 6 6s1.79 4 4 4zm-2 7v-3l-4 4 4 4v-3h12v-2H8z"/></svg></span></button><div id="popover-133e992a-bc2a-4d73-832f-8f5495c4409d" class="mud-popover-cascading-value"></div></div>
+
+
+<div class="mud-tooltip-root mud-tooltip-inline"><button aria-label="Light mode" type="button" class="mud-button-root mud-icon-button mud-inherit-text hover:mud-inherit-hover mud-ripple mud-ripple-icon" __internal_stopPropagation_onclick><span class="mud-icon-button-label"><svg class="mud-icon-root mud-svg-icon mud-icon-size-medium" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><rect fill="none" height="24" width="24"/><path d="M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0 c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2 c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1 C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06 c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41 l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41 c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36 c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg></span></button><div id="popover-dff300ae-f505-4a20-bc35-98d46b955e70" class="mud-popover-cascading-value"></div></div></div>
+
+    
+    <nav class="mud-navmenu mud-navmenu-primary mud-navmenu-margin-dense mud-navmenu-rounded pa-2"><h6 class="mud-typography mud-typography-h6 px-4">My Application</h6>
+        <p class="mud-typography mud-typography-body2 px-4 mud-text-secondary">Secondary Text</p>
+        <hr class="mud-divider mud-divider-fullwidth my-2" />
+        
+        <div class="mud-nav-item"><a href="/getting-started/installation" rel="" tabindex="0" class="mud-nav-link mud-ripple"><svg class="mud-icon-root mud-svg-icon mud-success-text mud-icon-size-medium mud-nav-link-icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M0 0h24v24H0z" fill="none"/><path d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg><div class="mud-nav-link-text">Get Started</div></a></div>
+        <div class="mud-nav-item"><a href="/docs/overview" rel="" tabindex="0" class="mud-nav-link mud-ripple"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M0 0h24v24H0z" fill="none"/><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg><div class="mud-nav-link-text">Docs</div></a></div>
+        <div class="mud-nav-item"><a href="/mud/introduction" rel="" tabindex="0" class="mud-nav-link mud-ripple"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg><div class="mud-nav-link-text">Learn More</div></a></div>
+
+        
+        <nav class="mud-nav-group" aria-label="Custom"><button tabindex="0" class="mud-nav-link mud-ripple" aria-controls="mh8xxo6cm" aria-expanded="false" aria-label="Toggle Custom"><div Class="mud-nav-link-text">Custom</div><svg class="mud-icon-root mud-svg-icon mud-icon-size-medium mud-nav-link-expand-icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M0 0h24v24H0z" fill="none"/><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg></button>
+    <div aria-hidden="true" class="mud-collapse-container invisible mud-navgroup-collapse" style=""><div class="mud-collapse-wrapper"><div class="mud-collapse-wrapper-inner"><nav id="mh8xxo6cm" class="mud-navmenu mud-navmenu-default mud-navmenu-margin-none"><div class="mud-list-subheader mud-list-subheader-gutters mt-4 pl-8 pb-2"><b>My Custom</b></div>
+            <div class="mud-nav-item"><a href="/counter" rel="" tabindex="-1" class="mud-nav-link mud-ripple"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><g><rect fill="none" height="24" width="24"/></g><g><g><rect height="2" width="6" x="9" y="1"/><path d="M19.03,7.39l1.42-1.42c-0.43-0.51-0.9-0.99-1.41-1.41l-1.42,1.42C16.07,4.74,14.12,4,12,4c-4.97,0-9,4.03-9,9 c0,4.97,4.02,9,9,9s9-4.03,9-9C21,10.88,20.26,8.93,19.03,7.39z M13,14h-2V8h2V14z"/></g></g></svg><div class="mud-nav-link-text">Counter</div></a></div>
+            <div class="mud-nav-item"><a href="/weather" rel="" tabindex="-1" class="mud-nav-link mud-ripple"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M0 0h24v24H0z" fill="none"/><path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"/></svg><div class="mud-nav-link-text">Weather</div></a></div>
+            <div class="mud-nav-item"><a href="/dashboard" rel="" tabindex="-1" class="mud-nav-link mud-ripple"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg><div class="mud-nav-link-text">Dashboard</div></a></div>
+            <div class="mud-nav-item"><a href="/new-order" rel="" tabindex="-1" class="mud-nav-link mud-ripple"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg><div class="mud-nav-link-text">New Order</div></a></div>
+            <div class="mud-nav-item"><a href="/page-with-landing-layout" rel="" tabindex="-1" class="mud-nav-link mud-ripple"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><g><rect fill="none" height="24" width="24" x="0" y="0"/></g><g><g><path d="M19,13H5c-1.1,0-2,0.9-2,2v4c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2v-4C21,13.9,20.1,13,19,13z"/><path d="M19,3H5C3.9,3,3,3.9,3,5v4c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3z"/></g></g></svg><div class="mud-nav-link-text">With Layout</div></a></div>
+            <div class="mud-nav-item"><a href="/page-without-landing-layout" rel="" tabindex="-1" class="mud-nav-link mud-ripple"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><rect fill="none" height="24" width="24"/><g><path d="M14.67,5v6.5H9.33V5H14.67z M15.67,11.5H21V5h-5.33V11.5z M14.67,19v-6.5H9.33V19H14.67z M15.67,12.5V19H21v-6.5H15.67z M8.33,12.5H3V19h5.33V12.5z M8.33,11.5V5H3v6.5H8.33z"/></g></svg><div class="mud-nav-link-text">Without Layout</div></a></div>
+            <div class="mud-nav-item"><a href="/payments" rel="" tabindex="-1" class="mud-nav-link mud-ripple"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 14V6c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zm-9-1c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm13-6v11c0 1.1-.9 2-2 2H4v-2h17V7h2z"/></svg><div class="mud-nav-link-text">Payments</div></a></div>
+            <div class="mud-nav-item"><a href="/tax-calculator" rel="" tabindex="-1" class="mud-nav-link mud-ripple"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><g><rect fill="none" height="24" width="24"/></g><g><path d="M19,3H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3z M13.03,7.06L14.09,6l1.41,1.41 L16.91,6l1.06,1.06l-1.41,1.41l1.41,1.41l-1.06,1.06L15.5,9.54l-1.41,1.41l-1.06-1.06l1.41-1.41L13.03,7.06z M6.25,7.72h5v1.5h-5 V7.72z M11.5,16h-2v2H8v-2H6v-1.5h2v-2h1.5v2h2V16z M18,17.25h-5v-1.5h5V17.25z M18,14.75h-5v-1.5h5V14.75z"/></g></svg><div class="mud-nav-link-text">
+                Tax Calculator
+            </div></a></div></nav></div></div></div></nav>
+
+        
+        <nav class="mud-nav-group" aria-label="Projects"><button tabindex="0" class="mud-nav-link mud-ripple" aria-controls="rnfmm4n7n" aria-expanded="false" aria-label="Toggle Projects"><div Class="mud-nav-link-text">Projects</div><svg class="mud-icon-root mud-svg-icon mud-icon-size-medium mud-nav-link-expand-icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M0 0h24v24H0z" fill="none"/><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg></button>
+    <div aria-hidden="true" class="mud-collapse-container invisible mud-navgroup-collapse" style=""><div class="mud-collapse-wrapper"><div class="mud-collapse-wrapper-inner"><nav id="rnfmm4n7n" class="mud-navmenu mud-navmenu-default mud-navmenu-margin-none"><div class="mud-list-subheader mud-list-subheader-gutters mt-4 pl-8 pb-2"><b>Official</b></div>
+            <div class="mud-nav-item"><a href="https://mudblazor.com/" rel="" tabindex="-1" class="mud-nav-link mud-ripple"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg><div class="mud-nav-link-text">MudBlazor</div></a></div>
+            <div class="mud-nav-item"><a href="https://try.mudblazor.com/" rel="" tabindex="-1" class="mud-nav-link mud-ripple"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><rect fill="none" height="24" width="24" y="0"/><path d="M22,13v3c0,1.1-0.9,2-2,2h-3l1,1v2H6v-2l1-1H4c-1.1,0-2-0.9-2-2V5c0-1.1,0.9-2,2-2l8,0v2L4,5v11h16v-3H22z M15,15l-5-5h4V3 h2v7h4L15,15z"/></svg><div class="mud-nav-link-text">TryMudBlazor</div></a></div>
+            <div class="mud-nav-item"><a href="https://github.com/MudBlazor/ThemeManager" rel="" tabindex="-1" class="mud-nav-link mud-ripple"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg><div class="mud-nav-link-text">ThemeManager</div></a></div>
+            <div class="mud-nav-item"><a href="https://github.com/MudBlazor/Templates" rel="" tabindex="-1" class="mud-nav-link mud-ripple"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><g><rect fill="none" height="24" width="24"/></g><g><path d="M2,4v7h20V4H2z M10,20h12v-7H10V20z M2,20h6v-7H2V20z"/></g></svg><div class="mud-nav-link-text">Templates</div></a></div>
+
+            
+            <div class="mud-list-subheader mud-list-subheader-gutters mt-4 pl-8 pb-2"><b>Community</b></div>
+            <div class="mud-nav-item"><a href="/mud/community/extensions" rel="" tabindex="-1" class="mud-nav-link mud-ripple"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg><div class="mud-nav-link-text">CommunityExtensions</div></a></div></nav></div></div></div></nav></nav></div></aside>
+
+
+    
+    <div class="mud-main-content">
+<div class="mud-container mud-container-maxwidth-lg mud-container--gutters mt-6"><h4 class="mud-typography mud-typography-h4 mud-typography-gutterbottom">
+        Hello, world!
+    </h4>
+
+    <p class="mud-typography mud-typography-body1 mb-4">
+        Welcome to your UI Test app.
+    </p>
+
+    <div class="mud-paper mud-elevation-2 pa-4 my-4" style=""><p class="mud-typography mud-typography-body2">
+        This component is defined in the <b>Shared</b> library.
+    </p></div>
+
+<div class="mud-alert mud-alert-filled-error mud-elevation-1"><div class="mud-alert-position justify-start"><div class="mud-alert-icon mud-alert-icon-left"><svg class="mud-icon-root mud-svg-icon mud-icon-size-medium" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg></div><div class="mud-alert-message">
+    Meltdown is imminent
+</div></div></div>
+
+    <div role="group" class="d-flex flex-column gap-4"><div class="mud-alert mud-alert-text-warning mud-elevation-0"><div class="mud-alert-position justify-start"><div class="mud-alert-icon mud-alert-icon-left"><svg class="mud-icon-root mud-svg-icon mud-icon-size-medium" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 5.99L19.53 19H4.47L12 5.99M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z"/></svg></div><div class="mud-alert-message">
+                A generic error occurred. Please try again later.
+            </div></div></div><div role="group" class="d-flex flex-column gap-1"><h3 class="mud-typography mud-typography-h3">Hello, world!</h3>
+            <p class="mud-typography mud-typography-body1">
+                Welcome to your new app, powered by MudBlazor and the .NET 9 Template!
+            </p></div>
+
+        
+        <div class="mud-alert mud-alert-text-normal mud-elevation-0"><div class="mud-alert-position justify-start"><div class="mud-alert-icon mud-alert-icon-left"><svg class="mud-icon-root mud-svg-icon mud-icon-size-medium" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V9h14v10zM5 7V5h14v2H5zm2 4h10v2H7zm0 4h7v2H7z"/></svg></div><div class="mud-alert-message">
+            You can find documentation and examples on our website:
+            <a href="https://mudblazor.com" target="_blank" class="mud-typography mud-link mud-primary-text mud-link-underline-hover mud-typography-body2"><b>mudblazor.com</b></a></div></div></div>
+
+        <hr class="mud-divider mud-divider-fullwidth" />
+
+        
+        <div role="group" class="d-flex flex-column gap-2"><h5 class="mud-typography mud-typography-h5">Interactivity in this Template</h5>
+
+            <p class="mud-typography mud-typography-body2">
+                When you opt for the <b>Global</b> interactivity location,
+                render modes are defined in <code>App.razor</code> and apply to all child components.
+                Providers are globally configured in the <code>MainLayout</code>.
+            </p>
+
+            <p class="mud-typography mud-typography-body2">
+                If you choose <b>Per page/component</b> interactivity,
+                the following providers must be included on each interactive page:
+            </p>
+
+            <div class="mud-paper mud-elevation-0 pa-3" style=""><div role="group" class="d-flex flex-column gap-1"><p class="mud-typography mud-typography-body2">&lt;MudPopoverProvider /&gt;</p>
+                    <p class="mud-typography mud-typography-body2">&lt;MudDialogProvider /&gt;</p>
+                    <p class="mud-typography mud-typography-body2">&lt;MudSnackbarProvider /&gt;</p></div></div>
+
+            <p class="mud-typography mud-typography-body2">
+                Pages without a specified render mode default to <b>Server-Side Rendering (SSR)</b>.
+                While MudBlazor supports SSR, interactive components such as buttons and menus
+                will not function unless interactivity is enabled.
+            </p></div>
+
+        <hr class="mud-divider mud-divider-fullwidth" />
+
+        
+        <div role="group" class="d-flex flex-column gap-3"><h5 class="mud-typography mud-typography-h5">What’s New in Blazor (.NET 9)</h5>
+
+            
+            <div class="mud-grid mud-grid-spacing-xs-6 justify-start"><div class="mud-grid-item mud-grid-item-xs-12 mud-grid-item-md-8"><div role="group" class="d-flex flex-column gap-2"><h6 class="mud-typography mud-typography-h6">Prerendering</h6>
+                        <p class="mud-typography mud-typography-body2">
+                            In .NET 9, every Blazor page is prerendered on the server
+                            regardless of the selected render mode.
+                        </p>
+                        <p class="mud-typography mud-typography-body2">
+                            This means all required services must be available server-side,
+                            even when using WebAssembly.
+                        </p>
+                        <p class="mud-typography mud-typography-body2">
+                            Prerendering improves perceived performance and initial load times.
+                        </p>
+
+                        <a href="https://github.com/dotnet/aspnetcore/issues/51468#issuecomment-1783568121" target="_blank" class="mud-typography mud-link mud-primary-text mud-link-underline-hover">
+                            More details
+                        </a></div></div></div>
+
+            
+            <div role="group" class="d-flex flex-column gap-1"><h6 class="mud-typography mud-typography-h6">InteractiveAuto</h6>
+                <p class="mud-typography mud-typography-body2">
+                    A discussion on how to achieve this render mode can be found here:
+                </p>
+                <a href="https://github.com/dotnet/aspnetcore/issues/51468#issue-1950424116" target="_blank" class="mud-typography mud-link mud-primary-text mud-link-underline-hover">
+                    More details
+                </a></div></div></div></div>
+
+        
+        <style>
+    section-background-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+
+      .section-background {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+
+        &.straight-end {
+          top: -50%;
+          height: 50%;
+        }
+
+        &.straight {
+          height: calc(100% + var(--section-diff));
+        }
+
+        &.skew {
+          transform: skewY(-12deg);
+        }
+
+        &.sweet {
+          background-color: var(--mud-palette-background-gray);
+        }
+
+        &.background {
+          background-color: var(--mud-palette-background);
+        }
+
+        &.surface {
+          background-color: var(--mud-palette-surface);
+        }
+      }
+    }
+
+</style>
+
+<section class="mud-landingpage-section lp-footer"><div class="section-background-container"><div class="section-background d-flex flex-column justify-end skew sweet"></div></div>
+    <div class="mud-container mud-container-maxwidth-lg mud-container--gutters"><div class="section-container padding-skew mud-text-secondary pb-8"><style scoped>
+    .docs-footer {
+        .mud-link {
+            margin: 8px 0;
+            cursor: pointer;
+            transition: color 200ms cubic-bezier(.4, 0, .2, 1) 0ms;
+        }
+    }
+</style>
+
+<div class="mud-grid mud-grid-spacing-xs-6 justify-start docs-footer"><div class="mud-grid-item mud-grid-item-xs-6 mud-grid-item-sm-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1404 1404" style="width:40px;"><path d="M406.89,219.14c-51.85,6.86-134.7-55.37-142.65-115.43-7.95-60.07,62.01-95.23,113.86-102.09,51.85-6.86,112.62,11.94,120.57,72.01,7.95,60.07-39.93,138.66-91.78,145.52Z" style="fill:#7e6fff;"></path>
+    <path d="M1351.61,490.53c-29.26-77.07-70.13-149.81-121.87-214.05-34.85-43.28-74.24-83.06-118.5-116.66-51.13-38.82-107.18-74.24-169.52-89.6C659.86,.78,682.24,202.58,537.88,264.05c-144.35,61.47-316.15,4.62-409.08,131.03-38.73,52.69-76.68,109.42-100.97,170.37C5.41,621.7-2.93,684,1.05,744.27c7.77,117.64,64.46,245.62,162.39,314.92,34.64,24.51,91.9,55.27,131.4,25.76,19.29-14.41,31.2-37.27,39.96-59.15,25.29-63.2,31.63-134.4,35.72-201.73,4.09-67.39-8.86-285.66,4.07-323.91,10.1-29.89,34.98-51.3,65.12-59.55,37.46-10.25,84.85,1.44,112.4,28.99,11.98,11.98,21.72,26.39,29.24,43.17,7.49,16.78,16.01,38.08,25.62,63.86l55.76,156.52c4.8,13.19,9.9,26.68,15.31,40.45,5.38,13.81,11.24,26.42,17.55,37.79,6.28,11.4,12.88,20.69,19.76,27.9,6.89,7.17,13.96,10.79,21.14,10.79,5.99,0,12.01-3.17,18-9.45,5.99-6.31,11.85-14.7,17.55-25.21,5.7-10.47,11.37-22.61,17.07-36.42,5.7-13.8,11.24-28.47,16.65-44.07l60.28-162.83c8.39-22.77,16.33-42.57,23.83-59.35,7.5-16.78,16.21-30.59,26.07-41.38,9.9-10.79,21.75-18.9,35.55-24.31,13.77-5.38,31.48-8.07,53.07-8.07,16.78,0,31.32,1.63,43.62,4.93,12.3,3.3,22.32,9.77,30.14,19.34,14.5,17.77,17.58,45.82,20.66,68.01,6.54,46.97,1.82,95.87,1.82,143.32v272.45c0,23.37,1.14,47.05,0,70.39-.98,20.03-.76,40.4-10.45,58.74-8.84,16.71-25.19,30.07-43.97,32.23-24.29,2.79-43.71-15.61-52.61-36.6-4.2-9.9-7.05-19.79-8.55-29.69-1.5-9.9-2.24-17.84-2.24-23.83,0,0,10.01-267.01-33.46-261.48-8.83,1.12-28.92,49.45-34.66,61.45-30.1,60.21-107.26,230.27-122.13,251.82-12.03,17.43-28.81,35.72-50.55,39.92-15.19,2.94-29.82-2.71-41.65-12.12-29.45-23.43-42.28-66.81-56.1-100.93-11.3-27.91-84.23-310.38-138.19-317.77-7.14-.98-12.3,12.27-15.31,36.86-3.01,24.6-15.8,456.32,106.49,577.77,174.23,173.02,487.57,157.97,720.78-196.79,113.7-172.96,103.22-422.6,33.4-606.5Z" style="fill:#7e6fff;"></path>
+    <path d="M369.84,537.14s-27.13,411.28-182.45,417.33c-116.75,4.55-168.93-122.4-176.64-144.99,20.77,97.3,72.69,193.09,152.7,249.7,34.64,24.51,91.9,55.26,131.4,25.76,19.29-14.41,31.2-37.27,39.96-59.15,25.29-63.2,31.63-134.4,35.72-201.73,3.34-55.09-4.69-210.9-.67-286.88v-.04Z" style="fill:#5a47ff;"></path></svg>
+        <div class="d-flex flex-column mt-4"><div class="d-flex align-center my-2"><svg class="mud-icon-root mud-svg-icon mud-icon-size-small mr-2" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M7.38,4.24c-.84,.11-2.17-.89-2.3-1.86s1-1.53,1.83-1.65,1.82,.19,1.94,1.16-.64,2.23-1.48,2.35Z"/><path d="M22.61,8.61c-.47-1.24-1.13-2.41-1.96-3.45-.56-.7-1.2-1.34-1.91-1.88-.82-.63-1.73-1.2-2.73-1.44-4.54-1.12-4.18,2.13-6.51,3.12-2.33,.99-5.1,.07-6.59,2.11-.62,.85-1.24,1.76-1.63,2.75-.36,.91-.5,1.91-.43,2.88,.13,1.9,1.04,3.96,2.62,5.08,.56,.39,1.48,.89,2.12,.42,.31-.23,.5-.6,.64-.95,.41-1.02,.51-2.17,.58-3.25s-.14-4.6,.07-5.22c.16-.48,.56-.83,1.05-.96,.6-.17,1.37,.02,1.81,.47,.19,.19,.35,.43,.47,.7,.12,.27,.26,.61,.41,1.03l.9,2.52c.08,.21,.16,.43,.25,.65,.09,.22,.18,.43,.28,.61,.1,.18,.21,.33,.32,.45,.11,.12,.23,.17,.34,.17,.1,0,.19-.05,.29-.15,.1-.1,.19-.24,.28-.41,.09-.17,.18-.36,.28-.59s.18-.46,.27-.71l.97-2.62c.14-.37,.26-.69,.38-.96,.12-.27,.26-.49,.42-.67,.16-.17,.35-.3,.57-.39,.22-.09,.51-.13,.86-.13,.27,0,.5,.03,.7,.08s.36,.16,.49,.31c.23,.29,.28,.74,.33,1.1,.11,.76,.03,1.55,.03,2.31v4.39c0,.38,.02,.76,0,1.13-.02,.32-.01,.65-.17,.95-.14,.27-.41,.48-.71,.52-.39,.05-.7-.25-.85-.59-.07-.16-.11-.32-.14-.48-.02-.16-.04-.29-.04-.38,0,0,.16-4.3-.54-4.21-.14,.02-.47,.8-.56,.99-.49,.97-1.73,3.71-1.97,4.06-.19,.28-.46,.58-.81,.64-.24,.05-.48-.04-.67-.2-.47-.38-.68-1.08-.9-1.63-.18-.45-1.36-5-2.23-5.12-.12-.02-.2,.2-.25,.59-.05,.4-.25,7.35,1.72,9.31,2.81,2.79,7.86,2.55,11.62-3.17,1.83-2.79,1.66-6.81,.54-9.77Z"/></svg>
+                <p class="mud-typography mud-typography-body1">MudBlazor</p></div>
+            <div class="d-flex align-center my-2"><svg class="mud-icon-root mud-svg-icon mud-icon-size-small mr-2" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><g><path d="M0,0h24v24H0V0z" fill="none"/></g><g><g><path d="M14.16,10.4l-5-3.57c-0.7-0.5-1.63-0.5-2.32,0l-5,3.57C1.31,10.78,1,11.38,1,12.03V20c0,0.55,0.45,1,1,1h4v-6h4v6h4 c0.55,0,1-0.45,1-1v-7.97C15,11.38,14.69,10.78,14.16,10.4z"/><path d="M21.03,3h-9.06C10.88,3,10,3.88,10,4.97l0.09,0.09c0.08,0.05,0.16,0.09,0.24,0.14l5,3.57c0.76,0.54,1.3,1.34,1.54,2.23H19 v2h-2v2h2v2h-2v3v1h4.03c1.09,0,1.97-0.88,1.97-1.97V4.97C23,3.88,22.12,3,21.03,3z M19,9h-2V7h2V9z"/></g></g></svg>
+                <p class="mud-typography mud-typography-body1">Gardnet AB</p></div>
+            <div class="d-flex align-center my-2"><svg class="mud-icon-root mud-svg-icon mud-icon-size-small mr-2" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M18.75 3.94L4.07 10.08c-.83.35-.81 1.53.02 1.85L9.43 14c.26.1.47.31.57.57l2.06 5.33c.32.84 1.51.86 1.86.03l6.15-14.67c.33-.83-.5-1.66-1.32-1.32z"/></svg>
+                <p class="mud-typography mud-typography-body1">Sweden</p></div></div>
+        <div class="d-flex mt-4"><a aria-label="twitter" type="button" href="https://twitter.com/MudBlazor" target="_blank" rel="noopener" class="mud-button-root mud-icon-button mud-inherit-text hover:mud-inherit-hover mud-ripple mud-ripple-icon mud-icon-button-edge-start me-2"><span class="mud-icon-button-label"><svg class="mud-icon-root mud-svg-icon mud-icon-size-medium" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/></svg></span></a>
+            <a aria-label="discord" type="button" href="https://discord.gg/mudblazor" target="_blank" rel="noopener" class="mud-button-root mud-icon-button mud-inherit-text hover:mud-inherit-hover mud-ripple mud-ripple-icon mud-icon-button-edge-start me-2"><span class="mud-icon-button-label"><svg class="mud-icon-root mud-svg-icon mud-icon-size-medium" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M19,6.75A9.2017,9.2017,0,0,0,14.625,5l-.2135.4274a8.4519,8.4519,0,0,1,4.151,2.1976A12.87,12.87,0,0,0,12,5.875a12.87,12.87,0,0,0-6.5625,1.75,8.6339,8.6339,0,0,1,4.151-2.1976L9.375,5A9.1429,9.1429,0,0,0,5,6.75S2.76,9.9989,2.375,16.375A8.2659,8.2659,0,0,0,8.0625,19l.7175-.9555A8.7654,8.7654,0,0,1,5,15.5a11.032,11.032,0,0,0,7,2.1875A11.032,11.032,0,0,0,19,15.5a8.7609,8.7609,0,0,1-3.78,2.5445L15.9375,19a8.2659,8.2659,0,0,0,5.6875-2.625C21.24,9.9989,19,6.75,19,6.75ZM9.1562,14.625a1.6511,1.6511,0,0,1-1.5312-1.75,1.6511,1.6511,0,0,1,1.5312-1.75,1.6511,1.6511,0,0,1,1.5313,1.75A1.6511,1.6511,0,0,1,9.1562,14.625Zm5.6876,0a1.6511,1.6511,0,0,1-1.5313-1.75,1.6511,1.6511,0,0,1,1.5313-1.75,1.6511,1.6511,0,0,1,1.5312,1.75A1.6511,1.6511,0,0,1,14.8438,14.625Z"/></svg></span></a>
+            <a aria-label="github" type="button" href="https://github.com/MudBlazor/MudBlazor" target="_blank" rel="noopener" class="mud-button-root mud-icon-button mud-inherit-text hover:mud-inherit-hover mud-ripple mud-ripple-icon mud-icon-button-edge-start me-2"><span class="mud-icon-button-label"><svg class="mud-icon-root mud-svg-icon mud-icon-size-medium" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2 0 1.9 1.2 1.9 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.4 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8 0 3.2.9.8 1.3 1.9 1.3 3.2 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1 .9 2.2v3.3c0 .3.1.7.8.6A12 12 0 0 0 12 .3"/></svg></span></a>
+            <a aria-label="stack overflow" type="button" href="https://stackoverflow.com/tags/mudblazor" target="_blank" rel="noopener" class="mud-button-root mud-icon-button mud-inherit-text hover:mud-inherit-hover mud-ripple mud-ripple-icon mud-icon-button-edge-start me-2"><span class="mud-icon-button-label"><svg class="mud-icon-root mud-svg-icon mud-icon-size-medium" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M17.05,21.77v-6.4h2.13v8.52H0V15.37H2.12v6.4Z"/><path d="M4.47,14.76,14.9,16.94l.44-2.1L4.91,12.66Zm1.38-5,9.66,4.5.88-1.93L6.73,7.84ZM8.53,5.05l8.19,6.81,1.35-1.62L9.88,3.42Zm5.29-5L12.11,1.27l6.35,8.55,1.71-1.27ZM4.25,19.62H14.9V17.49H4.25Z"/></svg></span></a></div></div>
+    <div class="mud-grid-item mud-grid-item-xs-6 mud-grid-item-sm-3 d-flex flex-column"><p class="mud-typography mud-typography-subtitle2 mb-3">Community</p>
+        <a href="/mud/community/getting-help" class="mud-typography mud-link mud-inherit-text mud-link-underline-none mud-typography-body1">Getting Help</a>
+        <a href="/mud/community/reporting-bugs" class="mud-typography mud-link mud-inherit-text mud-link-underline-none mud-typography-body1">Reporting Bugs</a>
+        <a href="/mud/community/contribution" class="mud-typography mud-link mud-inherit-text mud-link-underline-none mud-typography-body1">Contribute</a>
+        <a href="/mud/community/extensions" class="mud-typography mud-link mud-inherit-text mud-link-underline-none mud-typography-body1">Community Extensions</a></div>
+    <div class="mud-grid-item mud-grid-item-xs-6 mud-grid-item-sm-3 d-flex flex-column"><p class="mud-typography mud-typography-subtitle2 mb-3">Project</p>
+        <a href="/mud/announcements" class="mud-typography mud-link mud-inherit-text mud-link-underline-none mud-typography-body1">Announcements</a>
+        <a href="/mud/project/releases" class="mud-typography mud-link mud-inherit-text mud-link-underline-none mud-typography-body1">Releases</a>
+        <a href="/mud/project/roadmap" class="mud-typography mud-link mud-inherit-text mud-link-underline-none mud-typography-body1">Roadmap</a>
+        <a href="/mud/project/sponsor" class="mud-typography mud-link mud-inherit-text mud-link-underline-none mud-typography-body1">Sponsors & Backers</a>
+        <a href="/mud/project/team" class="mud-typography mud-link mud-inherit-text mud-link-underline-none mud-typography-body1">Team & Contributors</a>
+        <a href="/mud/project/how-it-started" class="mud-typography mud-link mud-inherit-text mud-link-underline-none mud-typography-body1">How it started</a></div>
+    <div class="mud-grid-item mud-grid-item-xs-6 mud-grid-item-sm-3 d-flex flex-column"><p class="mud-typography mud-typography-subtitle2 mb-3">Products & Legal Information</p>
+        <a href="https://mudblazor.com/" target="_blank" class="mud-typography mud-link mud-inherit-text mud-link-underline-none mud-typography-body1">MudBlazor</a>
+        <a href="https://try.mudblazor.com/" target="_blank" class="mud-typography mud-link mud-inherit-text mud-link-underline-none mud-typography-body1">TryMudBlazor</a>
+        <a href="https://github.com/MudBlazor/ThemeManager" target="_blank" class="mud-typography mud-link mud-inherit-text mud-link-underline-none mud-typography-body1">ThemeManager</a>
+        <a href="https://github.com/MudBlazor/Templates" target="_blank" class="mud-typography mud-link mud-inherit-text mud-link-underline-none mud-typography-body1">Templates</a>
+        <a href="/mud/cookie-policy" class="mud-typography mud-link mud-inherit-text mud-link-underline-none mud-typography-body1">Cookie Policy</a></div>
+    <div class="mud-grid-item mud-grid-item-xs-12"><div role="toolbar" class="mud-toolbar mud-toolbar-dense"><p class="mud-typography mud-typography-body1">Copyright &#xA9; 2020-2026 MudBlazor</p></div></div></div></div></div></section>
+        <span class="mud-scroll-to-top hidden" style="z-index:2000;"><button type="button" class="mud-button-root mud-fab mud-fab-primary mud-fab-size-large mud-ripple" __internal_stopPropagation_onclick><span class="mud-fab-label"><svg class="mud-icon-root mud-svg-icon mud-icon-size-medium" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="img"><path d="M0 0h24v24H0z" fill="none"/><path d="M7.41 15.41 12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg></span></button></span></div></div></div>
+        <blazor-focus-on-navigate selector="h1"></blazor-focus-on-navigate>
+<!-- %%-PRERENDERING-END-%% -->
+</div>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="." class="reload">Reload</a>
+        <span class="dismiss">🗙</span>
+    </div>
+    <script src="_framework/blazor.webassembly.zxhwjtv6sc.js"></script>
+    <script>navigator.serviceWorker.register('service-worker.js', { updateViaCache: 'none' });</script>
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
+
+
+
+</body></html>
