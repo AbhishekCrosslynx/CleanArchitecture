@@ -1,0 +1,86 @@
+# ------------------------------------------------------------
+# Reusable GitHub Actions Workflow: Common Setup
+# ------------------------------------------------------------
+# This workflow is designed to be called from other workflows
+# using `workflow_call`. It centralizes common setup steps like:
+#   - Checking out the repo
+#   - Caching NuGet dependencies
+#   - Restoring .NET packages
+#
+# This avoids duplication across multiple pipelines.
+# ------------------------------------------------------------
+
+name: Common Setup
+
+on:
+  workflow_call:   # Allows this workflow to be reused by other workflows
+    inputs:
+      solution:
+        description: 'Solution file to restore/build'
+        required: true
+        type: string
+        # Example: "MyApp.sln"
+
+      restore:
+        description: 'Run dotnet restore?'
+        required: false
+        default: true
+        type: boolean
+        # Allows callers to skip restore if already handled elsewhere
+
+jobs:
+  setup:
+    # Runs on GitHub-hosted Ubuntu runner
+    runs-on: ubuntu-latest
+
+    steps:
+      # --------------------------------------------------------
+      # Step 1: Checkout repository
+      # --------------------------------------------------------
+      # Pulls your repository code into the runner so subsequent
+      # steps (restore/build/test) can access it.
+      # Uses latest v6 version of the official checkout action.
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      # --------------------------------------------------------
+      # Step 2: Cache NuGet packages
+      # --------------------------------------------------------
+      # Speeds up builds by caching downloaded NuGet packages.
+      #
+      # Key points:
+      # - Cache location: ~/.nuget/packages
+      # - Cache key is based on:
+      #     OS + hash of all .csproj files + Directory.Packages.props
+      # - If any dependency changes, the hash changes → cache refreshes
+      #
+      # restore-keys:
+      # - Allows partial matches (fallback) if exact cache is missing
+      # - Helps reuse older caches when possible
+      #
+      # Result:
+      # - Cache hit → restore completes in seconds
+      # - Cache miss → full restore, then cache is saved
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ runner.os }}-${{ hashFiles('**/*.csproj', '**/Directory.Packages.props') }}
+          restore-keys: nuget-${{ runner.os }}-
+
+      # --------------------------------------------------------
+      # Step 3: Restore NuGet packages
+      # --------------------------------------------------------
+      # Runs `dotnet restore` to install dependencies defined
+      # in the provided solution file.
+      #
+      # Conditional execution:
+      # - Only runs if `inputs.restore == true`
+      # - Allows flexibility for workflows that:
+      #     - Already restored earlier
+      #     - Use custom restore strategies
+      #
+      # Uses the solution path passed by the caller workflow.
+      - name: Restore NuGet packages
+        if: ${{ inputs.restore }}   # Skip step if restore = false
+        run: dotnet restore ${{ inputs.solution }}
