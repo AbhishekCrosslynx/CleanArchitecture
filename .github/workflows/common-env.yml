@@ -1,0 +1,112 @@
+# -----------------------------------------------------------------------
+# Reusable GitHub Actions Workflow: Common Environment Logger
+# -----------------------------------------------------------------------
+# Purpose:
+#   This workflow captures and logs key environment details from the
+#   GitHub Actions runner. It is especially useful for debugging issues
+#   related to:
+#     - .NET SDK/version mismatches
+#     - Runtime availability problems
+#     - OS-specific behavior differences
+#
+# Why this matters:
+#   CI failures are often caused by differences between local dev
+#   environments and the GitHub runner. This workflow makes those
+#   differences visible in logs for faster troubleshooting.
+#
+# Typical usage:
+#   Call this workflow before build/test steps to get a snapshot of:
+#     - OS version
+#     - Installed SDKs/runtimes
+#     - Active SDK
+#     - Target framework used by the project
+# -----------------------------------------------------------------------
+
+name: Common Environment Logger
+
+on:
+  workflow_call:    # Enables reuse from other workflows
+    inputs:
+      targetFrameworkFile:
+        description: 'File containing <TargetFramework> (default: Directory.Build.props)'
+        required: false
+        default: 'Directory.Build.props'
+        type: string
+        # This allows flexibility if your project defines TargetFramework
+        # somewhere else (e.g., custom props file or .csproj)
+
+jobs:
+  log-env:
+    # Uses GitHub-hosted Ubuntu runner
+    runs-on: ubuntu-latest
+
+    steps:
+      # --------------------------------------------------------
+      # Step 1: Checkout repository
+      # --------------------------------------------------------
+      # Required so we can read project files (like Directory.Build.props)
+      # and extract configuration such as TargetFramework.
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      # --------------------------------------------------------
+      # Step 2: Log environment details
+      # --------------------------------------------------------
+      # Outputs key diagnostic information to the workflow logs.
+      #
+      # This step is intentionally verbose and structured with
+      # section headers to make logs easy to scan.
+      #
+      # Each section helps diagnose specific categories of issues:
+      #
+      #   OS Version:
+      #     Confirms the Linux distro and version used by the runner.
+      #     Useful for debugging native dependency or compatibility issues.
+      #
+      #   Installed SDKs:
+      #     Lists all available .NET SDK versions.
+      #     Helps identify if the required SDK is missing.
+      #
+      #   Installed Runtimes:
+      #     Shows available runtimes (ASP.NET, NETCore, etc.).
+      #     Important for runtime execution failures.
+      #
+      #   Active SDK:
+      #     Shows which SDK is selected by default (dotnet --version).
+      #     This is the version used unless overridden (e.g., global.json).
+      #
+      #   Target Framework:
+      #     Extracts the <TargetFramework> from the specified file.
+      #     Helps verify compatibility between project and installed SDKs.
+      #
+      # Notes:
+      #   - Uses `grep` for simplicity and speed.
+      #   - If no TargetFramework is found, prints a fallback message
+      #     instead of failing the workflow.
+      #
+      - name: Log environment details
+        run: |
+          echo "=== Ubuntu Version ==="
+          # Displays OS metadata (name, version, ID, etc.)
+          cat /etc/os-release
+          echo ""
+
+          echo "=== Installed .NET SDKs ==="
+          # Lists all installed SDK versions (used for builds)
+          dotnet --list-sdks
+          echo ""
+
+          echo "=== Installed .NET Runtimes ==="
+          # Lists runtimes available for executing apps
+          dotnet --list-runtimes
+          echo ""
+
+          echo "=== Active SDK (dotnet --version) ==="
+          # Shows the default SDK version in use
+          dotnet --version
+          echo ""
+
+          echo "=== Project Target Framework (from ${{ inputs.targetFrameworkFile }}) ==="
+          # Attempts to extract <TargetFramework> from the provided file
+          # Falls back gracefully if not found
+          grep "<TargetFramework>" ${{ inputs.targetFrameworkFile }} || echo "No TargetFramework found"

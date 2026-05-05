@@ -1,0 +1,119 @@
+name: Common Environment Logger
+description: Logs OS, .NET SDKs, runtimes, and project target framework for debugging CI environments
+
+inputs:
+  targetFrameworkFile:
+    description: "File containing <TargetFramework> (default: Directory.Build.props)"
+    required: false
+    default: Directory.Build.props
+
+runs:
+  using: composite
+  steps:
+
+    # -----------------------------------------------------------------------
+    # Reusable GitHub Composite Action: Common Environment Logger
+    # -----------------------------------------------------------------------
+    # Purpose:
+    #   This composite action captures and logs key environment details from
+    #   the GitHub Actions runner in a single unified execution step.
+    #
+    # It is especially useful for debugging issues related to:
+    #     - .NET SDK/version mismatches
+    #     - Runtime availability problems
+    #     - OS-specific behavior differences
+    #
+    # Why this matters:
+    #   CI failures are often caused by differences between local dev
+    #   environments and the GitHub runner. This action makes those
+    #   differences visible in logs for faster troubleshooting.
+    #
+    # Typical usage:
+    #   Include this action early in any workflow to capture a snapshot of:
+    #     - OS version
+    #     - Installed SDKs and runtimes
+    #     - Active .NET SDK
+    #     - Target framework used by the project
+    #
+    # Design choice:
+    #   All diagnostics are executed in a single shell block to ensure:
+    #     - Atomic log output (no scattered step logs)
+    #     - Easier scanning in CI failures
+    #     - Consistent ordering of environment data
+    # -----------------------------------------------------------------------
+
+    # --------------------------------------------------------
+    # Log environment details (single unified execution)
+    # --------------------------------------------------------
+    # Outputs key diagnostic information to the workflow logs.
+    #
+    # This step is intentionally verbose and structured with
+    # section headers to make logs easy to scan.
+    #
+    # Each section helps diagnose specific categories of issues:
+    #
+    #   OS Version:
+    #     Confirms the Linux distro and version used by the runner.
+    #     Useful for debugging native dependency or compatibility issues.
+    #
+    #   Installed SDKs:
+    #     Lists all available .NET SDK versions.
+    #     Helps identify if the required SDK is missing.
+    #
+    #   Installed Runtimes:
+    #     Shows available runtimes (ASP.NET, NETCore, etc.).
+    #     Important for runtime execution failures.
+    #
+    #   Active SDK:
+    #     Shows which SDK is selected by default (dotnet --version).
+    #     This is the version used unless overridden (e.g., global.json).
+    #
+    #   Target Framework:
+    #     Extracts the <TargetFramework> from the specified file.
+    #     Helps verify compatibility between project and installed SDKs.
+    #
+    # Notes:
+    #   - Uses a single bash block for atomic logging
+    #   - Uses `grep` for simplicity and speed
+    #   - If no TargetFramework is found, prints a fallback message
+    #     instead of failing the workflow
+    # --------------------------------------------------------
+
+    - name: Log full environment snapshot
+      shell: bash
+      run: |
+        echo "======================================"
+        echo "           OS INFORMATION"
+        echo "======================================"
+        cat /etc/os-release || true
+        echo ""
+
+        echo "======================================"
+        echo "        INSTALLED .NET SDKS"
+        echo "======================================"
+        dotnet --list-sdks || true
+        echo ""
+
+        echo "======================================"
+        echo "      INSTALLED .NET RUNTIMES"
+        echo "======================================"
+        dotnet --list-runtimes || true
+        echo ""
+
+        echo "======================================"
+        echo "        ACTIVE DOTNET SDK"
+        echo "======================================"
+        dotnet --version || true
+        echo ""
+
+        echo "======================================"
+        echo "     PROJECT TARGET FRAMEWORK"
+        echo "   (file: ${{ inputs.targetFrameworkFile }})"
+        echo "======================================"
+
+        if [ -f "${{ inputs.targetFrameworkFile }}" ]; then
+          grep "<TargetFramework>" "${{ inputs.targetFrameworkFile }}" || \
+            echo "No <TargetFramework> found in file"
+        else
+          echo "Target framework file not found"
+        fi
