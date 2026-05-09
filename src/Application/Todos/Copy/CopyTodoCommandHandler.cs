@@ -2,8 +2,8 @@ using Application.Abstractions.Authentication;
 using Application.Abstractions.Data;
 using Application.Abstractions.Messaging;
 using Domain.Todos;
-using Domain.Users;
 using Microsoft.EntityFrameworkCore;
+using SharedContracts.DTOs.Todos.Responses;
 using SharedKernel;
 
 namespace Application.Todos.Copy;
@@ -12,48 +12,46 @@ internal sealed class CopyTodoCommandHandler(
     IApplicationDbContext context,
     IDateTimeProvider dateTimeProvider,
     IUserContext userContext)
-    : ICommandHandler<CopyTodoCommand, Guid>
+    : ICommandHandler<CopyTodoCommand, TodoResponse>
 {
-    public async Task<Result<Guid>> Handle(CopyTodoCommand command, CancellationToken cancellationToken)
+    public async Task<Result<TodoResponse>> Handle(CopyTodoCommand command, CancellationToken cancellationToken)
     {
-        if (userContext.UserId != command.UserId)
-        {
-            return Result.Failure<Guid>(UserErrors.Unauthorized());
-        }
+        Guid userId = userContext.UserId;
 
-        User? user = await context.Users.AsNoTracking()
-            .SingleOrDefaultAsync(u => u.Id == command.UserId, cancellationToken);
-
-        if (user is null)
-        {
-            return Result.Failure<Guid>(UserErrors.NotFound(command.UserId));
-        }
-
-        TodoItem? existingTodo = await context.TodoItems.AsNoTracking()
-            .SingleOrDefaultAsync(t => t.Id == command.TodoId && t.UserId == command.UserId, cancellationToken);
+        TodoItem? existingTodo = await context.TodoItems
+            .AsNoTracking()
+            .SingleOrDefaultAsync(t => t.Id == command.TodoId && t.UserId == userId, cancellationToken);
 
         if (existingTodo is null)
         {
-            return Result.Failure<Guid>(TodoItemErrors.NotFound(command.TodoId));
+            return Result.Failure<TodoResponse>(TodoItemErrors.NotFound(command.TodoId));
         }
-
-        var copiedTodoItem = new TodoItem
+        var copiedTodo = new TodoItem
         {
-            UserId = user.Id,
+            UserId = userId,
             Description = existingTodo.Description,
             Priority = existingTodo.Priority,
             DueDate = existingTodo.DueDate,
-            Labels = existingTodo.Labels.ToList(), // Create a new list to avoid reference issues
-            IsCompleted = false, // Reset completion status for the copy
+            Labels = existingTodo.Labels.ToList(),
+            IsCompleted = false, // reset completion
             CreatedAt = dateTimeProvider.UtcNow
         };
 
-        copiedTodoItem.Raise(new TodoItemCreatedDomainEvent(copiedTodoItem.Id));
+        copiedTodo.Raise(new TodoItemCreatedDomainEvent(copiedTodo.Id));
 
-        context.TodoItems.Add(copiedTodoItem);
-
+        context.TodoItems.Add(copiedTodo);
         await context.SaveChangesAsync(cancellationToken);
 
-        return copiedTodoItem.Id;
+        return Result.Success(new TodoResponse(
+            copiedTodo.Id,
+            copiedTodo.UserId,
+            copiedTodo.Description,
+            copiedTodo.DueDate,
+            copiedTodo.Labels,
+            copiedTodo.IsCompleted,
+            copiedTodo.CreatedAt,
+            copiedTodo.CompletedAt,
+            copiedTodo.Priority
+        ));
     }
 }

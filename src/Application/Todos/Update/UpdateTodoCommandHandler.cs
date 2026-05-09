@@ -20,7 +20,11 @@ internal sealed class UpdateTodoCommandHandler(
             return Result.Failure(TodoItemErrors.NotFound(command.TodoItemId));
         }
 
-        todoItem.Description = command.Description;
+        // Update all fields from command
+        todoItem.Description = command.Request.Description;
+        todoItem.DueDate = command.Request.DueDate;
+        todoItem.Labels = command.Request.Labels ?? new List<string>();
+        todoItem.Priority = command.Request.Priority;
 
         await context.SaveChangesAsync(cancellationToken);
 

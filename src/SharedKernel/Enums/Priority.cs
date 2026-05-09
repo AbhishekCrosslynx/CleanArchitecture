@@ -1,4 +1,4 @@
-﻿namespace Domain.Todos;
+namespace SharedKernel.Enums;
 
 public enum Priority
 {

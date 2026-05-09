@@ -2,11 +2,13 @@ using FluentValidation;
 
 namespace Application.Todos.Copy;
 
-public class CopyTodoCommandValidator : AbstractValidator<CopyTodoCommand>
+public sealed class CopyTodoCommandValidator : AbstractValidator<CopyTodoCommand>
 {
     public CopyTodoCommandValidator()
     {
-        RuleFor(c => c.UserId).NotEmpty();
-        RuleFor(c => c.TodoId).NotEmpty();
+        RuleFor(c => c.TodoId)
+            .NotEmpty()
+            .NotEqual(Guid.Empty);
+
     }
 }

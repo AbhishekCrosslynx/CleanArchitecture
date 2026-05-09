@@ -1,5 +1,7 @@
 ﻿using Application.Abstractions.Messaging;
 using Application.Users.Register;
+using SharedContracts.ApiRoutes;
+using SharedContracts.DTOs.Users.Requests;
 using SharedKernel;
 using Web.Api.Extensions;
 using Web.Api.Infrastructure;
@@ -8,12 +10,10 @@ namespace Web.Api.Endpoints.Users;
 
 internal sealed class Register : IEndpoint
 {
-    public sealed record Request(string Email, string FirstName, string LastName, string Password);
-
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost("users/register", async (
-            Request request,
+        app.MapPost(AuthRoutes.Register, async (
+            RegisterUserRequest request,
             ICommandHandler<RegisterUserCommand, Guid> handler,
             CancellationToken cancellationToken) =>
         {
@@ -27,6 +27,13 @@ internal sealed class Register : IEndpoint
 
             return result.Match(Results.Ok, CustomResults.Problem);
         })
-        .WithTags(Tags.Users);
+        .WithTags(Tags.Users)
+        .WithName("RegisterUser")
+        .WithSummary("Register a new user")
+        .WithDescription("Creates a new user account and returns the generated user identifier.")
+        .Produces<Guid>(StatusCodes.Status200OK)
+        .ProducesProblem(StatusCodes.Status400BadRequest)
+        .ProducesProblem(StatusCodes.Status409Conflict)
+        .ProducesProblem(StatusCodes.Status500InternalServerError);
     }
 }

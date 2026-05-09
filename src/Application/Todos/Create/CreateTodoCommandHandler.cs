@@ -4,6 +4,7 @@ using Application.Abstractions.Messaging;
 using Domain.Todos;
 using Domain.Users;
 using Microsoft.EntityFrameworkCore;
+using SharedContracts.DTOs.Todos.Responses;
 using SharedKernel;
 
 namespace Application.Todos.Create;
@@ -12,26 +13,29 @@ internal sealed class CreateTodoCommandHandler(
     IApplicationDbContext context,
     IDateTimeProvider dateTimeProvider,
     IUserContext userContext)
-    : ICommandHandler<CreateTodoCommand, Guid>
+    : ICommandHandler<CreateTodoCommand, TodoResponse>
 {
-    public async Task<Result<Guid>> Handle(CreateTodoCommand command, CancellationToken cancellationToken)
+    public async Task<Result<TodoResponse>> Handle(
+        CreateTodoCommand command,
+        CancellationToken cancellationToken)
     {
-        if (userContext.UserId != command.UserId)
-        {
-            return Result.Failure<Guid>(UserErrors.Unauthorized());
-        }
+        Guid userId = userContext.UserId;
 
-        User? user = await context.Users.AsNoTracking()
-            .SingleOrDefaultAsync(u => u.Id == command.UserId, cancellationToken);
+        User? user = await context.Users
+            .AsNoTracking()
+            .SingleOrDefaultAsync(
+                u => u.Id == userId,
+                cancellationToken);
 
         if (user is null)
         {
-            return Result.Failure<Guid>(UserErrors.NotFound(command.UserId));
+            return Result.Failure<TodoResponse>(
+                UserErrors.NotFound(userId));
         }
 
         var todoItem = new TodoItem
         {
-            UserId = user.Id,
+            UserId = userId,
             Description = command.Description,
             Priority = command.Priority,
             DueDate = command.DueDate,
@@ -46,6 +50,16 @@ internal sealed class CreateTodoCommandHandler(
 
         await context.SaveChangesAsync(cancellationToken);
 
-        return todoItem.Id;
+        return Result.Success(new TodoResponse(
+            todoItem.Id,
+            todoItem.UserId,
+            todoItem.Description,
+            todoItem.DueDate,
+            todoItem.Labels,
+            todoItem.IsCompleted,
+            todoItem.CreatedAt,
+            todoItem.CompletedAt,
+            todoItem.Priority
+        ));
     }
 }
