@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
 using Web.Api;
 using Web.Api.Extensions;
+using Web.Api.Options;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +21,12 @@ builder.Services
 
 builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
 
+// CORS configuration
+builder.Services.AddConfiguredCors(builder.Configuration);
+
 WebApplication app = builder.Build();
+
+app.UseCors(CorsOptions.DevCors);
 
 app.MapEndpoints();
 

@@ -1,0 +1,110 @@
+@using Shared.States
+@using MudBlazor
+@using SharedContracts.DTOs.Users.Requests
+@implements IDisposable
+@inject AuthState AuthState
+
+@page "/login"
+
+<MudPaper Elevation="3" Class="pa-6" Style="max-width: 500px; margin: 0 auto;">
+
+    @if (AuthState.IsAuthenticated)
+    {
+        <MudText Typo="Typo.h5" Class="mb-4">Welcome!</MudText>
+
+        <MudText Typo="Typo.body1" Class="mb-2">
+            <strong>Email:</strong> @AuthState.CurrentUser?.Email
+        </MudText>
+
+        <MudText Typo="Typo.body2" Color="Color.Secondary" Class="mb-4">
+            User ID: @AuthState.CurrentUser?.Id
+        </MudText>
+
+        <MudButton Variant="Variant.Filled"
+                   Color="Color.Secondary"
+                   OnClick="Logout"
+                   FullWidth="true">
+            Logout
+        </MudButton>
+    }
+    else
+    {
+        <MudText Typo="Typo.h5" Class="mb-4">Login</MudText>
+
+        @if (!string.IsNullOrEmpty(AuthState.Error))
+        {
+            <MudAlert Severity="Severity.Error" Class="mb-4">
+                @AuthState.Error
+            </MudAlert>
+        }
+
+        <MudTextField @bind-Value="loginEmail"
+                      Label="Email"
+                      Variant="Variant.Outlined"
+                      InputType="InputType.Email"
+                      Class="mb-3"
+                      Disabled="@AuthState.IsLoading" />
+
+        <MudTextField @bind-Value="loginPassword"
+                      Label="Password"
+                      Variant="Variant.Outlined"
+                      InputType="InputType.Password"
+                      Class="mb-4"
+                      Disabled="@AuthState.IsLoading" />
+
+        <MudButton Variant="Variant.Filled"
+                   Color="Color.Primary"
+                   OnClick="Login"
+                   FullWidth="true"
+                   Disabled="@AuthState.IsLoading"
+                   Class="mb-2">
+            @if (AuthState.IsLoading)
+            {
+                <MudProgressCircular Size="Size.Small" Indeterminate="true" Class="mr-2" />
+                <span>Logging in...</span>
+            }
+            else
+            {
+                <span>Login</span>
+            }
+        </MudButton>
+    }
+</MudPaper>
+
+@code {
+    private string loginEmail = string.Empty;
+    private string loginPassword = string.Empty;
+
+
+    protected override void OnInitialized()
+    {
+        AuthState.OnChange += OnAuthStateChanged;
+    }
+
+    private void OnAuthStateChanged(object? sender, EventArgs e)
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    private async Task Login()
+    {
+        LoginUserRequest loginRequest = new LoginUserRequest(loginEmail, loginPassword);
+        bool success = await AuthState.LoginAsync(loginRequest);
+
+        if (success)
+        {
+            loginEmail = string.Empty;
+            loginPassword = string.Empty;
+        }
+    }
+
+    private async Task Logout()
+    {
+        await AuthState.Logout();
+    }
+
+    public void Dispose()
+    {
+        AuthState.OnChange -= OnAuthStateChanged;
+    }
+}
